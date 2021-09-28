@@ -1,0 +1,100 @@
+.newProdWrapper{
+    width: 100%;
+    height: auto;
+    margin-top: 40px;
+    text-align: center;
+}
+
+.newProdForm{
+    width: 80%;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-row-gap: 10px;
+}
+
+.newProdForm label{
+    justify-self: start;
+    align-self: center;
+    display: none;
+    color: black;
+    font-weight: 500;
+    margin-right: 10px;
+}
+
+.newProdForm input{
+    width: 100%;
+    height: auto;
+    box-sizing: border-box;
+    border: 2px solid rgb(214, 214, 214);
+    border-radius: 6px;
+    background-color: rgb(255, 255, 255);
+    outline: none;
+    padding: 10px;
+}
+
+.newProdForm textarea{
+    width: 100%;
+    height: auto;
+    box-sizing: border-box;
+    border: 2px solid rgb(214, 214, 214);
+    border-radius: 6px;
+    background-color: rgb(255, 255, 255);
+    outline: none;
+    resize: none;
+    padding: 10px;
+}
+
+.newProdForm input:focus{
+    border: 2px solid rgb(197, 197, 197);
+    background-color: rgb(253, 224, 224);
+}
+
+.newProdForm textarea:focus{
+    border: 2px solid rgb(197, 197, 197);
+    background-color: rgb(253, 224, 224);
+}
+
+
+
+.title{
+    font-weight: 700;
+    font-size: large;
+    margin-bottom: 30px;
+}
+
+.submitBtn{
+    background-color: rgb(255, 255, 221);
+    border: 2px solid rgb(214, 214, 214);
+    border-radius: 6px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    padding: 5px;
+    cursor: pointer;
+}
+
+/*media queries*/
+
+@media(min-width:600px){
+    
+    .newProdForm{
+        width: 80%;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: 1fr 8fr;
+    }
+
+    .newProdForm label{
+        display: inline;
+    }
+
+    .submitBtn{
+        max-width: max-content;
+        grid-column: 2/3;
+        justify-self: flex-end;
+        font-size: 1.05rem;
+    }
+    
+}

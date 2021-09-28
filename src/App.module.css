@@ -1,0 +1,36 @@
+.layout{
+    width: 90%;
+    min-height: 100vh;
+    margin: 0 auto;
+    position: relative;
+    padding-bottom: 50px;
+}
+
+.footer{
+    position: absolute;
+    bottom: 10px;
+    background-color: rgb(76, 79, 82);
+    color: white;
+    width: 100%;
+    height: auto;
+    margin: 0 auto;
+    text-align: right;
+}
+
+.footer div{
+    margin-top: 5px;
+    font-size: 0.7rem;
+    padding-right: 10px;
+}
+
+@media(min-width:800px){
+    .footer div{
+        font-size: 1rem;
+    }
+}
+
+@media(min-width:1000px){
+    .footer div{
+        font-size: 1.2rem;
+    }
+}

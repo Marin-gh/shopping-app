@@ -1,0 +1,152 @@
+.reviewsLayout{
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: 0;
+    margin-top: 20px;
+    grid-column: 1/3;
+}
+
+.title{
+    color: black;
+    font-size: 1rem;
+    font-weight: 800;
+    margin-bottom: 20px;
+}
+
+.cardWrapper{
+    display: grid;
+    grid-template-columns: repeat(1,1fr);
+    grid-gap: 20px;
+    width: 100%;
+    max-height: 300px;
+    overflow-y: scroll;
+}
+
+.isLoading{
+    color:rgb(184, 103, 27);
+    font-size: 0.7rem;
+    margin-top: 50px;
+    animation-name: rotateLoading;
+    animation-duration: 0.5s;
+    animation-fill-mode: both;
+    animation-iteration-count: infinite;
+}
+
+.card{
+    width: 100%;
+    height: auto;
+    box-sizing: border-box;
+    border: 4px solid rgb(214, 214, 214);
+    border-radius: 5px;
+}
+
+.card p{
+    font-size: 1rem;
+    color: rgb(77, 76, 76);
+    padding: 5px;
+}
+
+.author{
+    font-style: italic;
+    margin-top: 3px;
+}
+
+.editBtn{
+    background-color: wheat;
+    border: 2px solid rgb(184, 103, 27);
+    border-radius: 4px;
+    font-weight: 600;
+    margin-left: 5px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    padding: 5px;
+  }
+  
+.deleteBtn{
+    background-color:rgb(235, 88, 88);
+    border: 1px solid rgb(184, 103, 27);
+    border-radius: 4px;
+    font-weight: 600;
+    margin: 5px;
+    padding: 5px;
+  }
+  
+.btnWrapper{
+    display: flex;
+    justify-content: flex-end;
+}
+
+.newReviewForm{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.submitBtn{
+    background-color: rgb(247, 239, 239);
+    border: 2px solid rgb(162, 180, 155);
+    border-radius: 6px;
+    font-weight: 600;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    padding: 5px;
+}
+
+.submitBtn:hover{
+    background-color: rgb(219, 208, 208);
+}
+
+.textReview{
+    margin-top: 20px;
+    width: 100%;
+    height: auto;
+    box-sizing: border-box;
+    border: 4px solid rgb(162, 180, 155);
+    border-radius: 10px;
+    background-color: rgb(247, 239, 239);
+    outline: none;
+    resize: none;
+}
+
+.textReview:hover{
+    border: 4px solid rgb(122, 136, 116);
+    background-color: rgb(219, 208, 208);
+}
+
+/*media queries*/
+
+@media(min-width:600px){
+
+    .isLoading{
+        font-size: 1rem;
+    }
+
+    .submitBtn{
+        max-width: max-content;
+        align-self: flex-end;
+    }
+}
+
+
+@media(min-width:1000px){
+
+    .isLoading{
+        font-size: 1.2rem;
+    }
+}
+
+@media(min-width:1200px){
+    .cardWrapper button{
+      font-size: 1rem;
+    }
+}
+
+/*keyframes*/
+
+@keyframes rotateLoading{
+    0%{}
+    100%{transform: rotateZ(360deg)}
+}

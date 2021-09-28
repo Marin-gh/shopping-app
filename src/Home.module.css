@@ -1,0 +1,33 @@
+.home{
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    justify-items: center;
+}
+
+.img{
+    grid-column: 1;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 5px;
+    max-width: 100%;
+    height: auto;
+}
+
+.img:hover {
+    box-shadow: 0 0 2px 1px rgb(184, 103, 27);
+}
+
+.welcome{
+    font-size: 1.2rem;
+    font-weight: 700;
+    color:rgb(184, 103, 27);
+    margin-top: 5px;
+    text-align: center;
+}
+
+@media(min-width:600px){
+    .welcome{
+        font-size: 1.5rem;
+        margin-top: 10px;
+    }
+}

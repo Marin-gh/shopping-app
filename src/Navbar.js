@@ -46,21 +46,24 @@ function Navbar(props) {
                 </li>
                 <li>
                   <Link to='/products' onClick={()=>{setIsModalOpen(false)}}>Products</Link>
-                </li> 
-                <div>
-                  {!isLoggedIn ? 
-                    <li>
-                        <Link to='/login' onClick={()=>{setIsModalOpen(false)}}>Login</Link> / <Link to='/register' onClick={()=>{setIsModalOpen(false)}}>Register</Link>
-                    </li> :
+                </li>
+                {!isLoggedIn ? 
+                  <li>
+                      <Link to='/login' onClick={()=>{setIsModalOpen(false)}}>Login</Link> / <Link to='/register' onClick={()=>{setIsModalOpen(false)}}>Register</Link>
+                  </li> :
+                  <>
                     <li>
                         <Link to='/newProduct' onClick={()=>{setIsModalOpen(false)}}>New Product</Link>
                     </li>
-                  }
-                </div>
+                    <li>
+                        <div className="logout" onClick={()=>{setIsModalOpen(false)}}>Logout</div>
+                    </li>
+                  </>
+                }
               </ul>
               <div className="shoppingIcon"><i className="fas fa-shopping-cart fa-lg" onClick={(e)=>{e.stopPropagation(); setIsModalOpen2(prevIsModalOpen2 => !prevIsModalOpen2);}}> <span>{shoppingCart.length}</span> </i></div>
             </>
-            {isModalOpen2 && <ShoppingCartModal />}
+            {<div className={isModalOpen2 ? 'shoppCartModal open' : 'shoppCartModal'}><ShoppingCartModal /></div>}
         </nav>
     );
 }

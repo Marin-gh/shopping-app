@@ -23,13 +23,12 @@ const reducerFunctionShoppingCart = (currentState, action) => {
 		case 'add/increment':
       {
         console.log(`adding/incrementing shopping cart..`);
-        //console.dir(currentState);
         //ako je action.data.id in currentState, tj. ako vec postoji taj product u kosarici
         if (currentState.length!==0 && currentState.some((item) => item.id === action.data.id)){
           //samo inkrementiraj .noOrders property tom postojećem productu iz košarice i returnaj novi niz s takvim promijenjenim productom
           const newState = currentState.map((item)=>{
             if(item.id === action.data.id){
-              return {...action.data, noOrders: item.noOrders++};
+              return {...action.data, noOrders: item.noOrders+1};
             }else{
               return item;
             }
@@ -39,7 +38,7 @@ const reducerFunctionShoppingCart = (currentState, action) => {
           return [...currentState, {...action.data, noOrders: 1}];
         }
       }
-		case 'decrement/remove':
+		/*case 'decrement/remove':
       {
         console.log("removing/decrementing shopping cart..");
         if(action.data.noOrders === 1){
@@ -56,13 +55,39 @@ const reducerFunctionShoppingCart = (currentState, action) => {
           //samo dekrementiraj .noOrders property tom action.data i returnaj novi niz s takvim promijenjenim productom
           const newState = currentState.map((item)=>{
             if(item.id === action.data.id){
-              return {...action.data, noOrders: item.noOrders--};
+              return {...action.data, noOrders: item.noOrders-1};
             }else{
               return item;
             }
           });
           return newState;
         }
+      }*/
+    case 'remove':
+      {
+        console.log("removing item from shopping cart..");
+        //remove-aj taj product i returnaj novi state bez tog producta
+        const newState = currentState.filter((item)=>{
+          if(item.id !== action.data.id){
+            return true;
+          }else{
+            return false;
+          }
+        });
+        return newState;
+      }
+    case 'change':
+      {
+        console.log("changing noOrders property (min 1, max 100)..");
+        //samo change .noOrders property tom action.data i returnaj novi niz s takvim promijenjenim productom
+        const newState = currentState.map((item)=>{
+          if(item.id === action.data.id){
+            return {...action.data, noOrders: action.noOrders};
+          }else{
+            return item;
+          }
+        });
+        return newState;
       }
 		case 'reset':
 			return initalStateShoppingCart;

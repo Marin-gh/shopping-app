@@ -22,7 +22,6 @@
   .navUl.open{
     left: 0px;
     z-index: 100;
-    border-radius: 5px;
   }
 
   .navUl li{
@@ -40,6 +39,17 @@
   .navUl li a:hover{
     color:rgb(163, 125, 90);
   }
+
+  .logout{
+    color:rgb(68, 78, 112);
+    font-size: 1.2rem;
+    font-weight: 700;
+    cursor: pointer;
+  }
+
+  .logout:hover{
+    color:rgb(163, 125, 90);
+  }
   
   .navIcons{
     display: flex;
@@ -48,6 +58,18 @@
   
   .shoppingIcon{
     display: none;
+  }
+
+  .shoppCartModal{
+    position: absolute;
+    right: -100%;
+    max-width: 50%;
+    transition: all 0.5s;
+  }
+
+  .shoppCartModal.open{
+    right: 0px;
+    z-index: 100;
   }
 
 /*media queries*/
@@ -73,7 +95,6 @@
       border-bottom: 1px solid rgb(184, 103, 27);
       background-color: transparent;
       padding: 0;
-      /*transition: left 0.5s;*/
     }
     
     .navUl li{
@@ -89,12 +110,20 @@
     .navUl li a{
       font-size: 1rem;
     }
+
+    .logout{
+      font-size: 1rem;
+    }
   
     .shoppingIcon{
       display: inline-block;
       position: absolute;
       right: 10px;
       top: 15px;
+    }
+
+    .shoppCartModal{
+      max-width: 40%;
     }
   
 }
@@ -104,5 +133,18 @@
     .navUl li a{
       font-size: 1.2rem;
     }
-  
+
+    .logout{
+      font-size: 1.2rem;
+    }
+
+    .shoppCartModal{
+      max-width: 30%;
+    }
+}
+
+@media(min-width: 1000px){
+  .shoppCartModal{
+      max-width: 20%;
+  }
 }

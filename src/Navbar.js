@@ -3,11 +3,11 @@ import { Link } from 'react-router-dom';
 import './Navbar.css';
 import ShoppingCartModal from './ShoppingCartModal';
 import { ShoppingCartContext } from './App' ;
+import { UserContext } from './App';
 
 
 function Navbar(props) {
 
-    const [isLoggedIn, setIsLoggedIn] = useState(true);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isModalOpen2, setIsModalOpen2] = useState(false);
 
@@ -15,6 +15,10 @@ function Navbar(props) {
     const { shoppingCart } = useContext(ShoppingCartContext);
     //dispatchShoppingCart metoda za update-anje shoppingCart globalne state varijable
     //const { dispatchShoppingCart } = useContext(ShoppingCartContext);
+
+    //user globalna state varijabla koja sadrži objekt (s podatcima o logiranom useru, ako ima koji takav)
+    //dispatchUser metoda za update-anje user globalne state varijable
+    const { user, dispatchUser } = useContext(UserContext);
 
     useEffect(()=>{
       const handleModal = ()=>{
@@ -47,7 +51,7 @@ function Navbar(props) {
                 <li>
                   <Link to='/products' onClick={()=>{setIsModalOpen(false)}}>Products</Link>
                 </li>
-                {!isLoggedIn ? 
+                {!(user.isLoggedIn) ? 
                   <li>
                       <Link to='/login' onClick={()=>{setIsModalOpen(false)}}>Login</Link> / <Link to='/register' onClick={()=>{setIsModalOpen(false)}}>Register</Link>
                   </li> :
@@ -56,7 +60,7 @@ function Navbar(props) {
                         <Link to='/newProduct' onClick={()=>{setIsModalOpen(false)}}>New Product</Link>
                     </li>
                     <li>
-                        <div className="logout" onClick={()=>{setIsModalOpen(false)}}>Logout</div>
+                        <div className="logout" onClick={()=>{setIsModalOpen(false); dispatchUser({type: 'remove/logout'})}}>Logout</div>
                     </li>
                   </>
                 }

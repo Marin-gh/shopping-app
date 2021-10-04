@@ -1,5 +1,5 @@
 import React from 'react';
-import { useReducer } from 'react';
+import { useReducer, useEffect } from 'react';
 import styles from './App.module.css';
 import {
   BrowserRouter as Router,
@@ -17,7 +17,7 @@ import Register from './Register';
 //initialState i reducerFuntion za globalnu ShoppingCart varijablu
 //initialState će biti prazan niz (a inače ćemo tu spremati niz objekata/produkata na koje smo kliknuli "add to cart")
 //action će sadržavati objekt s propertyjima .type (koja vrsta akcije) te .data koju ćemo add-ati ili remove-ati iz niza shoppingCart
-const initalStateShoppingCart = [];
+const initialStateShoppingCart = [];
 const reducerFunctionShoppingCart = (currentState, action) => {
 	switch (action.type) {
 		case 'add/increment':
@@ -90,57 +90,96 @@ const reducerFunctionShoppingCart = (currentState, action) => {
         return newState;
       }
 		case 'reset':
-			return initalStateShoppingCart;
+			return initialStateShoppingCart;
 		default:
 			return currentState;
 	}
 }
 
+//initialState i reducerFuntion za globalnu user varijablu
+//initialState će biti prazan objekt (a inače ćemo tu spremati objekt/user-a koji je logiran); zapravo objekt s propertyjem .isLoggedIn postavljenim na false, ali
+//nema ostalih propertyja koji bi se odnosili na logiranog usera
+//action će sadržavati objekt s propertyjima .type (koja vrsta akcije) te .data (koji dobivamo od severa iz baze) koju ćemo add-ati/login kao podatci o logiranom useru
+const initialStateUser = {isLoggedIn: false};
+const reducerFunctionUser = (currentState, action) => {
+	switch (action.type) {
+		case 'add/login':
+      //update user globalne state varijable s podatcima o user-u koji dolaze kao action.data od servera iz baze te postavljanje propertyja .isLoggedIn na true
+          return {...action.data, isLoggedIn: true};
+    case 'remove/logout':
+          return {isLoggedIn: false};
+    case 'reset':
+        return {isLoggedIn: false};
+    default:
+        return currentState;
+  }
+}
+
 //globalna ShoppingCartContext varijabla
 export const ShoppingCartContext = React.createContext();
 
+//globalna UserContext varijabla
+export const UserContext = React.createContext();
+
 function App() {
 
-  //shoppingCart globalna state varijabla (bilo bi dobro to spremit u neki locale storage, a ne kao state varijablu) koja će sadržavati niz objekata/produkata
-  const [ shoppingCart, dispatchShoppingCart ] = useReducer(reducerFunctionShoppingCart, initalStateShoppingCart );
+  //shoppingCart globalna state varijabla (na svaki refresh, vrijednost globalne state varijable je ono što je spremljeno u localeStorage pod key 'shoppingCart'
+  //ili ako nije još spremljeno ništa, onda initialStateShoppingCart što je prazan niz)
+  const [ shoppingCart, dispatchShoppingCart ] = useReducer(reducerFunctionShoppingCart, JSON.parse(localStorage.getItem('shoppingCart')) || initialStateShoppingCart );
+
+  //user globalna state varijabla (na svaki refresh, vrijednost globalne state varijable je ono što je spremljeno u localeStorage pod key 'user'
+  //ili ako nije još spremljeno ništa, onda initialStateUser što je prazan objekt, doduše s propertyje .isLoggedIn postavljenim na false)
+  const [ user, dispatchUser ] = useReducer(reducerFunctionUser, JSON.parse(localStorage.getItem('user')) || initialStateUser );
+
+  useEffect(() => {
+    //na svaku promjenu globalne shoppingCart state varijable, spremi tu novu vrijednost u localeStorage pod key "shoppingCart"
+    localStorage.setItem("shoppingCart", JSON.stringify(shoppingCart));
+  }, [shoppingCart]);
+
+  useEffect(() => {
+    //na svaku promjenu globalne user state varijable, spremi tu novu vrijednost u localeStorage pod key "user"
+    localStorage.setItem("user", JSON.stringify(user));
+  }, [user]);
 
   return (
     <ShoppingCartContext.Provider value={{shoppingCart, dispatchShoppingCart}}>
-      <Router>
-        <div className={styles.layout}>
-          
-          <header>
-              <Navbar/>
-          </header>
-          
-          <article>
-            <Switch>
-                <Route exact path="/">
-                  <Home />
-                </Route>
-                <Route exact path="/products">
-                  <Products />
-                </Route>
-                <Route exact path="/products/:id">
-                  <Product />
-                </Route>
-                <Route exact path="/login">
-                  <Login />
-                </Route>
-                <Route exact path="/register">
-                  <Register />
-                </Route>
-                <Route exact path="/newProduct">
-                  <NewProduct />
-                </Route>
-              </Switch>
-          </article>
+      <UserContext.Provider value={{user, dispatchUser}}>
+        <Router>
+          <div className={styles.layout}>
+            
+            <header>
+                <Navbar/>
+            </header>
+            
+            <article>
+              <Switch>
+                  <Route exact path="/">
+                    <Home />
+                  </Route>
+                  <Route exact path="/products">
+                    <Products />
+                  </Route>
+                  <Route exact path="/products/:id">
+                    <Product />
+                  </Route>
+                  <Route exact path="/login">
+                    <Login />
+                  </Route>
+                  <Route exact path="/register">
+                    <Register />
+                  </Route>
+                  <Route exact path="/newProduct">
+                    <NewProduct />
+                  </Route>
+                </Switch>
+            </article>
 
-          <footer className={styles.footer}>
-            <div>@Copyright 2021 Shopping App</div>
-          </footer>
-        </div>
-      </Router>
+            <footer className={styles.footer}>
+              <div>@Copyright 2021 Shopping App</div>
+            </footer>
+          </div>
+        </Router>
+      </UserContext.Provider>
   </ShoppingCartContext.Provider>
   );
 }

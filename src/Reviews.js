@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import styles from './Reviews.module.css';
+import { UserContext } from './App';
 
 function Reviews(props) {
 
@@ -7,9 +8,10 @@ function Reviews(props) {
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(false);
     const [isAuthor, setIsAuthor] = useState(true);
-    const [isLoggedIn, setIsLoggedIn] = useState(true);
-
     const [newReview, setNewReview] = useState("");
+
+    //user globalna state varijabla koja sadrži objekt (s podatcima o logiranom useru, ako ima koji takav)
+    const { user } = useContext(UserContext);
 
     const id = props.id;
 
@@ -57,7 +59,7 @@ function Reviews(props) {
                 </div>
                 )})}
             </div>
-            {isLoggedIn &&
+            {user.isLoggedIn &&
                     <form action="" className={styles.newReviewForm} onSubmit={(e)=>{handleSubmit(e)}}>
                         <label htmlFor="addReview"></label>
                         <textarea id="addReview" rows="6" cols="50" placeholder="Add a new review..." className={styles.textReview} onChange={(e)=>{setNewReview(e.target.value)}}></textarea>

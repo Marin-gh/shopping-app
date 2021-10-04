@@ -9,7 +9,6 @@ function Product(props) {
 
     const { id } = useParams();
     const [isAuthor, setIsAuthor] = useState(true);
-    const [isLoggedIn, setIsLoggedIn] = useState(true);
     const [data, setData] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(false);
@@ -62,9 +61,7 @@ function Product(props) {
                         {isAuthor && 
                             <div className={styles.btnWrapper}><button className={styles.editBtn} onClick={(e)=>{handleEdit(e, data)}}>Edit</button><button className={styles.deleteBtn} onClick={(e)=>{handleDelete(e, data)}}>Delete</button></div>
                         }
-                        {isLoggedIn && 
-                            <div className={styles.btnWrapper2}><button className={styles.addToCartBtn} onClick={(e)=>{handleAddToCart(e, data)}}>Add to cart</button></div>
-                        }
+                        <div className={styles.btnWrapper2}><button className={styles.addToCartBtn} onClick={(e)=>{handleAddToCart(e, data)}}>Add to cart</button></div>
                     </div>
 
                     {/*review component kojoj cu proslijediti id da dohvatim sve review-ove povezano s ovim product-om*/}

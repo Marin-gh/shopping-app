@@ -55,9 +55,9 @@ function ShoppingCartModal(props) {
                 <div className={styles.shoppingCartModalWrapper} onClick={(e)=>{e.stopPropagation();}}>
                     {shoppingCart.map((item)=>{
                         return(
-                            <div key={item.id} className={styles.shoppingCartOneCard}>
+                            <div key={item._id} className={styles.shoppingCartOneCard}>
                                 <div className={styles.removeIcon} onClick={(e)=>{handleRemove(e, item)}}><i className="fas fa-minus-circle"></i></div>
-                                <Link to={`/products/${item.id}`} onClick={(e)=>{console.log("You clicked on a link")}}>
+                                <Link to={`/products/${item._id}`} onClick={(e)=>{console.log("You clicked on a link")}}>
                                     <img className={styles.shoppingCartImage} src={item.image} alt="productImage"></img>
                                 </Link>
                                 <p>{item.title}</p>

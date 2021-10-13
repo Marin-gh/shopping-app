@@ -1,11 +1,11 @@
-.newProdWrapper{
+.editProdWrapper{
     width: 100%;
     height: auto;
     margin-top: 40px;
     text-align: center;
 }
 
-.newProdForm{
+.editProdForm{
     width: 80%;
     margin: 0 auto;
     display: grid;
@@ -13,7 +13,7 @@
     grid-row-gap: 10px;
 }
 
-.newProdForm label{
+.editProdForm label{
     justify-self: start;
     align-self: center;
     display: none;
@@ -22,7 +22,7 @@
     margin-right: 10px;
 }
 
-.newProdForm input{
+.editProdForm input{
     width: 100%;
     height: auto;
     box-sizing: border-box;
@@ -33,7 +33,7 @@
     padding: 10px;
 }
 
-.newProdForm textarea{
+.editProdForm textarea{
     width: 100%;
     height: auto;
     box-sizing: border-box;
@@ -45,12 +45,12 @@
     padding: 10px;
 }
 
-.newProdForm input:focus{
+.editProdForm input:focus{
     border: 2px solid rgb(197, 197, 197);
     background-color: rgb(253, 224, 224);
 }
 
-.newProdForm textarea:focus{
+.editProdForm textarea:focus{
     border: 2px solid rgb(197, 197, 197);
     background-color: rgb(253, 224, 224);
 }
@@ -89,14 +89,14 @@
 
 @media(min-width:600px){
     
-    .newProdForm{
+    .editProdForm{
         width: 80%;
         margin: 0 auto;
         display: grid;
         grid-template-columns: 1fr 8fr;
     }
 
-    .newProdForm label{
+    .editProdForm label{
         display: inline;
     }
 

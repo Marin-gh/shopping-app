@@ -4,6 +4,8 @@ import { useState, useEffect, useContext } from 'react';
 import Reviews from './Reviews';
 import DeleteModal from './DeleteModal.js';
 import { ShoppingCartContext } from './App' ;
+import axios from "axios";
+import { useHistory } from 'react-router-dom';
 
 function Product(props) {
 
@@ -13,31 +15,49 @@ function Product(props) {
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(false);
 
-    const[deleteModalOpen, setDeleteModalOpen] = useState(false);
+    //state - je li otvoren ili zatvoren; url - endpoint na koji šaljemo delete request; redirect - di će nas preusmjeriti nakon delete-anja
+    const [deleteModalOpen, setDeleteModalOpen] = useState({state: false, url: "", redirect: '/products'});
 
     //shoppingCart globalna state varijabla koja sadrži niz objekata/produkata koji su u košarici
     //const { shoppingCart } = useContext(ShoppingCartContext);
     //dispatchShoppingCart metoda za update-anje shoppingCart globalne state varijable
     const { dispatchShoppingCart } = useContext(ShoppingCartContext);
 
-    //fetch data from db with given id (given as params) 
-    //sad bez db
+    const history = useHistory();
+
+    //fetch data from db with given id (given as params)
     useEffect(()=>{
-        const falseData = 
-            {id: '1', title: 'BMW', description: "Good car", location: "Split", price:25000, image: "https://www.bmw.hr/content/dam/bmw/common/all-models/m-series/x2-m/navigation/bmw-x-series-x2-m35i-modelfinder.png"};
-        setData(falseData);
-        setIsLoading(false);
-    },[]);
+        async function fetchData(){
+            try{
+                const fetchedData = await axios.get(`http://localhost:8080/products/${id}`);
+                //console.log(fetchedData);
+                //fetchedData.data mi treba biti traženi objekt(product)
+                if(typeof(fetchedData.data) === "string" ){
+                    setError(true);
+                }else{
+                    setData(fetchedData.data);
+                    setError(false);
+                }
+                setIsLoading(false);
+            }catch{
+                setError(true);
+                setIsLoading(false);
+            }
+        }
+        fetchData();
+    },[id]);
+
 
     function handleEdit(e, item){
         e.stopPropagation();
-        console.log(`You clicked edit button: ${e.target}, ${item.id}`);
+        console.log(`You clicked edit button: ${e.target}, ${item._id}`);
+        history.push(`/editProduct/${item._id}`);
     }
 
     function handleDelete(e, item){
         e.stopPropagation();
-        console.log(`You clicked delete button: ${e.target}, ${item.id}`);
-        setDeleteModalOpen(true);
+        console.log(`You clicked delete button: ${e.target}, ${item._id}`);
+        setDeleteModalOpen({state:true, url: `http://localhost:8080/products/${item._id}`, redirect: '/products'});
     }
 
     function handleAddToCart(e, item){
@@ -52,22 +72,27 @@ function Product(props) {
             {data && <div className={styles.card}>
                 
                     {/*details about product*/}
-                    <img src={data.image} className={styles.cardImage} alt="productImage"></img>
+                    <img src={data.image[0]} className={styles.cardImage} alt="productImage"></img>
                     <div className={styles.content}>
                         <p>Title: {data.title} </p>
                         <p>Description: {data.description} </p>
                         <p>Location: {data.location} </p>
                         <p>Price: {data.price} euros</p>
                         {isAuthor && 
-                            <div className={styles.btnWrapper}><button className={styles.editBtn} onClick={(e)=>{handleEdit(e, data)}}>Edit</button><button className={styles.deleteBtn} onClick={(e)=>{handleDelete(e, data)}}>Delete</button></div>
+                            <div className={styles.btnWrapper}>
+                                <button className={styles.editBtn} onClick={(e)=>{handleEdit(e, data)}}>Edit</button>
+                                <button className={styles.deleteBtn} onClick={(e)=>{handleDelete(e, data)}}>Delete</button>
+                            </div>
                         }
-                        <div className={styles.btnWrapper2}><button className={styles.addToCartBtn} onClick={(e)=>{handleAddToCart(e, data)}}>Add to cart</button></div>
+                        <div className={styles.btnWrapper2}>
+                            <button className={styles.addToCartBtn} onClick={(e)=>{handleAddToCart(e, data)}}>Add to cart</button>
+                        </div>
                     </div>
 
-                    {/*review component kojoj cu proslijediti id da dohvatim sve review-ove povezano s ovim product-om*/}
+                    {/*Reviews component kojoj cu proslijediti id producta da dohvatim sve review-ove povezano s ovim product-om*/}
                     <Reviews id = {id}/>
                 </div>}
-            {deleteModalOpen && <DeleteModal closeModal={[deleteModalOpen, setDeleteModalOpen]} />}
+            {deleteModalOpen.state && <div className={styles.modalWrapper}><DeleteModal closeModal={[deleteModalOpen, setDeleteModalOpen]} /></div>}
             {error && <span>Error with fetching data</span>}
         </div>
     )

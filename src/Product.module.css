@@ -77,6 +77,18 @@
     animation-iteration-count: infinite;
 }
 
+.modalWrapper{
+    position: fixed;
+    margin: 0 auto;
+    top: 30vh;
+    width: 250px;
+    height: auto;
+    z-index: 100;
+    background-color: rgb(255, 195, 152);
+    border: 8px outset rgb(134, 88, 34);
+    border-radius: 10px;
+}
+
 /*media queries*/
 
 @media(min-width:600px){
@@ -84,6 +96,14 @@
     .isLoading{
         font-size: 1rem;
     }
+}
+
+@media(min-width:800px){
+
+    .modalWrapper{
+        width: 350px;
+    }
+    
 }
 
 @media(min-width:1000px){

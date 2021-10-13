@@ -13,6 +13,9 @@ import Product from './Product';
 import NewProduct from './NewProduct';
 import Login from './Login';
 import Register from './Register';
+import NotFound from './NotFound';
+import Error from './Error';
+import EditProduct from './EditProduct';
 
 //initialState i reducerFuntion za globalnu ShoppingCart varijablu
 //initialState će biti prazan niz (a inače ćemo tu spremati niz objekata/produkata na koje smo kliknuli "add to cart")
@@ -23,11 +26,11 @@ const reducerFunctionShoppingCart = (currentState, action) => {
 		case 'add/increment':
       {
         console.log(`adding/incrementing shopping cart..`);
-        //ako je action.data.id in currentState, tj. ako vec postoji taj product u kosarici
-        if (currentState.length!==0 && currentState.some((item) => item.id === action.data.id)){
+        //ako je action.data._id in currentState, tj. ako vec postoji taj product u kosarici
+        if (currentState.length!==0 && currentState.some((item) => item._id === action.data._id)){
           //samo inkrementiraj .noOrders property tom postojećem productu iz košarice i returnaj novi niz s takvim promijenjenim productom
           const newState = currentState.map((item)=>{
-            if(item.id === action.data.id){
+            if(item._id === action.data._id){
               return {...action.data, noOrders: item.noOrders+1};
             }else{
               return item;
@@ -44,7 +47,7 @@ const reducerFunctionShoppingCart = (currentState, action) => {
         if(action.data.noOrders === 1){
           //remove-aj taj product i returnaj novi state bez tog producta
           const newState = currentState.filter((item)=>{
-            if(item.id !== action.data.id){
+            if(item._id !== action.data._id){
               return true;
             }else{
               return false;
@@ -54,7 +57,7 @@ const reducerFunctionShoppingCart = (currentState, action) => {
         }else{
           //samo dekrementiraj .noOrders property tom action.data i returnaj novi niz s takvim promijenjenim productom
           const newState = currentState.map((item)=>{
-            if(item.id === action.data.id){
+            if(item._id === action.data._id){
               return {...action.data, noOrders: item.noOrders-1};
             }else{
               return item;
@@ -68,7 +71,7 @@ const reducerFunctionShoppingCart = (currentState, action) => {
         console.log("removing item from shopping cart..");
         //remove-aj taj product i returnaj novi state bez tog producta
         const newState = currentState.filter((item)=>{
-          if(item.id !== action.data.id){
+          if(item._id !== action.data._id){
             return true;
           }else{
             return false;
@@ -81,7 +84,7 @@ const reducerFunctionShoppingCart = (currentState, action) => {
         console.log("changing noOrders property (min 1, max 100)..");
         //samo change .noOrders property tom action.data i returnaj novi niz s takvim promijenjenim productom
         const newState = currentState.map((item)=>{
-          if(item.id === action.data.id){
+          if(item._id === action.data._id){
             return {...action.data, noOrders: action.noOrders};
           }else{
             return item;
@@ -100,7 +103,7 @@ const reducerFunctionShoppingCart = (currentState, action) => {
 //initialState će biti prazan objekt (a inače ćemo tu spremati objekt/user-a koji je logiran); zapravo objekt s propertyjem .isLoggedIn postavljenim na false, ali
 //nema ostalih propertyja koji bi se odnosili na logiranog usera
 //action će sadržavati objekt s propertyjima .type (koja vrsta akcije) te .data (koji dobivamo od severa iz baze) koju ćemo add-ati/login kao podatci o logiranom useru
-const initialStateUser = {isLoggedIn: false};
+const initialStateUser = {isLoggedIn: true};
 const reducerFunctionUser = (currentState, action) => {
 	switch (action.type) {
 		case 'add/login':
@@ -170,6 +173,15 @@ function App() {
                   </Route>
                   <Route exact path="/newProduct">
                     <NewProduct />
+                  </Route>
+                  <Route exact path="/editProduct/:id">
+                    <EditProduct />
+                  </Route>
+                  <Route exact path="/error">
+                    <Error />
+                  </Route>
+                  <Route path='*'>
+                    <NotFound />
                   </Route>
                 </Switch>
             </article>

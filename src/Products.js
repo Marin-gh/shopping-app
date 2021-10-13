@@ -2,38 +2,51 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import styles from './Products.module.css';
 import DeleteModal from './DeleteModal.js';
+import axios from "axios";
+import { useHistory } from 'react-router-dom';
 
 function Products(props) {
 
     const [data, setData] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(false);
-    //isAuthor bi trebali dobiti iz server-a (kad se logiramo, onda bi nam browser treba poslati id logiranog user-a i taj id ćemo spremiti u ovu varijablu); to bi mogla biti globalna state varijabla
     const [isAuthor, setIsAuthor] = useState(true);
+    const [deleteModalOpen, setDeleteModalOpen] = useState({state: false, url: "", redirect: '/products'});
 
-    const[deleteModalOpen, setDeleteModalOpen] = useState(false);
+    const history = useHistory();
 
+    //fetch data from db
     useEffect(()=>{
-        //fetch data from db
-        //sad bez db
-        const falseData = [
-            {id: '1', title: 'BMW', description: "Good car", location: "Split", price:25000, image: "https://www.bmw.hr/content/dam/bmw/common/all-models/m-series/x2-m/navigation/bmw-x-series-x2-m35i-modelfinder.png"},
-            {id: '2', title: 'Mercedes', description: "Perfect car", location: "Zagreb", price: 18000, image: "https://upload.wikimedia.org/wikipedia/commons/f/f7/2018_Mercedes-Benz_A200_AMG_Line_Premium_Automatic_1.3_Front.jpg"},
-            {id: '3', title: 'Škoda', description: "Bad car", location: "Zadar", price: 10000, image: "https://media.autoexpress.co.uk/image/private/s--YqkqBUCE--/f_auto,t_content-image-full-mobile@1/v1595492412/autoexpress/2020/07/Skoda%20Octavia%20UK%202020-19.jpg"}
-        ];
-        setData(falseData);
-        setIsLoading(false);
-    },[])
+        async function fetchData(){
+            try{
+                const fetchedData = await axios.get('http://localhost:8080/products');
+                //console.log(fetchedData);
+                //fetchedData.data mi treba biti niz objekata(produkata)
+                if(typeof(fetchedData.data) === "string" ){
+                    setError(true);
+                }else{
+                    setData(fetchedData.data);
+                    setError(false);
+                }
+                setIsLoading(false);
+            }catch{
+                setError(true);
+                setIsLoading(false);
+            }
+        }
+        fetchData();
+    },[]);
 
     function handleEdit(e, item){
         e.stopPropagation();
-        console.log(`You clicked edit button: ${e.target}, ${item.id}`);
+        console.log(`You clicked edit button: ${e.target}, ${item._id}`);
+        history.push(`/editProduct/${item._id}`);
     }
 
     function handleDelete(e, item){
         e.stopPropagation();
-        console.log(`You clicked delete button: ${e.target}, ${item.id}`);
-        setDeleteModalOpen(true);
+        console.log(`You clicked delete button: ${e.target}, ${item._id}`);
+        setDeleteModalOpen({state: true, url: `http://localhost:8080/products/${item._id}`, redirect: '/products'});
     }
 
     return (
@@ -41,21 +54,22 @@ function Products(props) {
             {isLoading && <span className={styles.isLoading}>is loading...</span>}
             {data && <div className={styles.cardWrapper}>{data.map((item)=>{
                 return(
-                <div className={styles.card} key={item.id}>
-                    <Link to={`/products/${item.id}`} className={styles.link} >
-                        <img src={item.image} className={styles.cardImage} alt="productImage"></img>
+                <div className={styles.card} key={item._id}>
+                    <Link to={`/products/${item._id}`} className={styles.link} >
+                        <img src={item.image[0]} className={styles.cardImage} alt="productImage"></img>
                         <p>Title: {item.title} </p>
                         <p>Description: {item.description} </p>
                         <p>Location: {item.location} </p>
                         <p>Price: {item.price} euros</p>
                     </Link>
                     {isAuthor && 
-                        <div className={styles.btnWrapper}><button className={styles.editBtn} onClick={(e)=>{handleEdit(e, item)}}>Edit</button><button className={styles.deleteBtn} onClick={(e)=>{handleDelete(e, item)}}>Delete</button></div>
+                        <div className={styles.btnWrapper}><button className={styles.editBtn} onClick={(e)=>{handleEdit(e, item)}}>Edit</button>
+                        <button className={styles.deleteBtn} onClick={(e)=>{handleDelete(e, item)}}>Delete</button></div>
                     }
                 </div>
                 )})}
             </div>}
-            {deleteModalOpen && <DeleteModal closeModal={[deleteModalOpen, setDeleteModalOpen]} />}
+            {deleteModalOpen.state && <div className={styles.modalWrapper}><DeleteModal closeModal={[deleteModalOpen, setDeleteModalOpen]} /></div>}
             {error && <span>Error with fetching data</span>}
         </div>
     )

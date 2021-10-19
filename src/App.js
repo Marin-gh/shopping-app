@@ -103,7 +103,7 @@ const reducerFunctionShoppingCart = (currentState, action) => {
 //initialState će biti prazan objekt (a inače ćemo tu spremati objekt/user-a koji je logiran); zapravo objekt s propertyjem .isLoggedIn postavljenim na false, ali
 //nema ostalih propertyja koji bi se odnosili na logiranog usera
 //action će sadržavati objekt s propertyjima .type (koja vrsta akcije) te .data (koji dobivamo od severa iz baze) koju ćemo add-ati/login kao podatci o logiranom useru
-const initialStateUser = {isLoggedIn: true};
+const initialStateUser = {isLoggedIn: false};
 const reducerFunctionUser = (currentState, action) => {
 	switch (action.type) {
 		case 'add/login':
@@ -132,7 +132,7 @@ function App() {
 
   //user globalna state varijabla (na svaki refresh, vrijednost globalne state varijable je ono što je spremljeno u localeStorage pod key 'user'
   //ili ako nije još spremljeno ništa, onda initialStateUser što je prazan objekt, doduše s propertyje .isLoggedIn postavljenim na false)
-  const [ user, dispatchUser ] = useReducer(reducerFunctionUser, JSON.parse(localStorage.getItem('user')) || initialStateUser );
+  const [ user, dispatchUser ] = useReducer(reducerFunctionUser, JSON.parse(sessionStorage.getItem('user')) || initialStateUser );
 
   useEffect(() => {
     //na svaku promjenu globalne shoppingCart state varijable, spremi tu novu vrijednost u localeStorage pod key "shoppingCart"
@@ -141,7 +141,7 @@ function App() {
 
   useEffect(() => {
     //na svaku promjenu globalne user state varijable, spremi tu novu vrijednost u localeStorage pod key "user"
-    localStorage.setItem("user", JSON.stringify(user));
+    sessionStorage.setItem("user", JSON.stringify(user));
   }, [user]);
 
   return (

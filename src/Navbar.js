@@ -4,6 +4,7 @@ import './Navbar.css';
 import ShoppingCartModal from './ShoppingCartModal';
 import { ShoppingCartContext } from './App' ;
 import { UserContext } from './App';
+import axios from "axios";
 
 
 function Navbar(props) {
@@ -37,6 +38,28 @@ function Navbar(props) {
     },[isModalOpen, isModalOpen2]);
 
 
+    async function handleLogout(e){
+      e.preventDefault();
+      setIsModalOpen(false);
+      dispatchUser({type: 'remove/logout'});
+      //sad šaljemo request serveru na '/logout' da odlogira user-a iz login server session
+      try{
+          //odlogirat ćemo user-a (iz login server session i maknuti iz naše client session tako da update-amo našu client session)
+          const response = await axios.get('http://localhost:8080/logout', {withCredentials: true});
+          console.log(response.data);
+          if(typeof(response.data) === "string" ){
+              //console.log(response.data);
+          }else{
+              //update-amo globalnu user varijablu
+              const { username, email } = response.data;
+              console.log(`removing user: USERNAME: ${username}, EMAIL: ${email}`);
+          }
+      }catch(error){
+        console.log(error);
+      }
+  }
+
+
     return (
         <nav className="nav">
             <div className="navIcons">
@@ -60,7 +83,7 @@ function Navbar(props) {
                         <Link to='/newProduct' onClick={()=>{setIsModalOpen(false)}}>New Product</Link>
                     </li>
                     <li>
-                        <div className="logout" onClick={()=>{setIsModalOpen(false); dispatchUser({type: 'remove/logout'})}}>Logout</div>
+                        <div className="logout" onClick={(e)=>{handleLogout(e)}}>Logout</div>
                     </li>
                   </>
                 }

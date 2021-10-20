@@ -29,7 +29,7 @@ function Product(props) {
     useEffect(()=>{
         async function fetchData(){
             try{
-                const fetchedData = await axios.get(`http://localhost:8080/products/${id}`);
+                const fetchedData = await axios.get(`http://localhost:8080/products/${id}`, {withCredentials: true});
                 //console.log(fetchedData);
                 //fetchedData.data mi treba biti traženi objekt(product)
                 if(typeof(fetchedData.data) === "string" ){
@@ -78,6 +78,7 @@ function Product(props) {
                         <p>Description: {data.description} </p>
                         <p>Location: {data.location} </p>
                         <p>Price: {data.price} euros</p>
+                        <p>Author: {data.author.username}</p>
                         {isAuthor && 
                             <div className={styles.btnWrapper}>
                                 <button className={styles.editBtn} onClick={(e)=>{handleEdit(e, data)}}>Edit</button>

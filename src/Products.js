@@ -19,12 +19,13 @@ function Products(props) {
     useEffect(()=>{
         async function fetchData(){
             try{
-                const fetchedData = await axios.get('http://localhost:8080/products');
+                const fetchedData = await axios.get('http://localhost:8080/products', {withCredentials: true});
                 //console.log(fetchedData);
                 //fetchedData.data mi treba biti niz objekata(produkata)
                 if(typeof(fetchedData.data) === "string" ){
                     setError(true);
                 }else{
+                    console.dir(fetchedData.data);
                     setData(fetchedData.data);
                     setError(false);
                 }
@@ -61,6 +62,7 @@ function Products(props) {
                         <p>Description: {item.description} </p>
                         <p>Location: {item.location} </p>
                         <p>Price: {item.price} euros</p>
+                        <p>Author: {item.author.username}</p>
                     </Link>
                     {isAuthor && 
                         <div className={styles.btnWrapper}><button className={styles.editBtn} onClick={(e)=>{handleEdit(e, item)}}>Edit</button>

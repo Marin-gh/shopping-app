@@ -41,16 +41,16 @@ function Navbar(props) {
     async function handleLogout(e){
       e.preventDefault();
       setIsModalOpen(false);
+      //update-amo globalnu user varijablu
       dispatchUser({type: 'remove/logout'});
       //sad šaljemo request serveru na '/logout' da odlogira user-a iz login server session
       try{
           //odlogirat ćemo user-a (iz login server session i maknuti iz naše client session tako da update-amo našu client session)
           const response = await axios.get('http://localhost:8080/logout', {withCredentials: true});
-          console.log(response.data);
+          //console.log(response.data);
           if(typeof(response.data) === "string" ){
-              //console.log(response.data);
+              console.log(response.data);
           }else{
-              //update-amo globalnu user varijablu
               const { username, email } = response.data;
               console.log(`removing user: USERNAME: ${username}, EMAIL: ${email}`);
           }

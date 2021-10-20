@@ -30,7 +30,7 @@ function Reviews(props) {
     useEffect(()=>{
         async function fetchData(){
             try{
-                const fetchedData = await axios.get(`http://localhost:8080/reviews/${id}`);
+                const fetchedData = await axios.get(`http://localhost:8080/reviews/${id}`, {withCredentials: true});
                 //console.log(fetchedData);
                 //fetchedData.data mi treba biti niz objekata(review-ova)
                 if(typeof(fetchedData.data) === "string" ){
@@ -69,7 +69,7 @@ function Reviews(props) {
         setIsLoading2(true);
         //sad šaljemo podatke serveru (post request)
         try{
-            const response = await axios.post('http://localhost:8080/reviews', newReview);
+            const response = await axios.post('http://localhost:8080/reviews', newReview, {withCredentials: true});
             //console.log(response.data);
             setIsLoading2(false);
             if(typeof(response.data) === "string" ){

@@ -17,7 +17,7 @@ function EditProduct(props) {
     useEffect(()=>{
         async function fetchData(){
             try{
-                const fetchedData = await axios.get(`http://localhost:8080/products/${id}`);
+                const fetchedData = await axios.get(`http://localhost:8080/products/${id}`, {withCredentials: true});
                 //console.log(fetchedData);
                 //fetchedData.data mi treba biti traženi objekt(product)
                 if(typeof(fetchedData.data) === "string" ){
@@ -40,7 +40,7 @@ function EditProduct(props) {
         setIsLoading(true);
         //sad šaljemo podatke serveru (put request)
         try{
-            const response = await axios.put(`http://localhost:8080/products/${id}`, data);
+            const response = await axios.put(`http://localhost:8080/products/${id}`, data, {withCredentials: true});
             //console.log(response.data);
             setIsLoading(false);
             if(typeof(response.data) === "string" ){

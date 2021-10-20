@@ -30,6 +30,8 @@ function Login(props) {
                 setError(true);
             }else{
                 setError(false);
+                const { username, email } = response.data;
+                console.log(`logged user: USERNAME: ${username}, EMAIL: ${email}`);
                 //update-amo globalnu user varijablu ako smo se uspješno logirali
                 dispatchUser({type: 'add/login', data: response.data});
                 history.go(-1);

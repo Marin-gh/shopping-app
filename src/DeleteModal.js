@@ -20,7 +20,7 @@ function DeleteModal(props) {
         //setIsLoading(true);
         //sad šaljemo podatke serveru (delete request)
         try{
-            const response = await axios.delete(url);
+            const response = await axios.delete(url, {withCredentials: true});
             //console.log(response.data);
             //setIsLoading(false);
             if(typeof(response.data) === "string" ){

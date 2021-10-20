@@ -15,7 +15,7 @@ function NewProduct(props) {
         setIsLoading(true);
         //sad šaljemo podatke serveru (post request)
         try{
-            const response = await axios.post('http://localhost:8080/products', data);
+            const response = await axios.post('http://localhost:8080/products', data, {withCredentials: true});
             //console.log(response.data);
             setIsLoading(false);
             if(typeof(response.data) === "string" ){
@@ -53,7 +53,7 @@ function NewProduct(props) {
                 </form>
             </div>
             {isLoading && <span className={styles.isLoading}>is loading...</span>}
-            {error && <span>Error with fetching data</span>}
+            {error && <span>Error....</span>}
         </>
     );
 }

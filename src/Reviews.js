@@ -4,7 +4,7 @@ import { UserContext } from './App';
 import axios from "axios";
 import { useHistory } from 'react-router-dom';
 import DeleteModal from './DeleteModal.js';
-import { useRef } from 'react';
+//import { useRef } from 'react';
 
 function Reviews(props) {
 
@@ -24,7 +24,7 @@ function Reviews(props) {
 
     const history = useHistory();
 
-    const editInputRef = useRef();
+    //const editInputRef = useRef();
 
     //fetch data from db (samo one review-e koji su povezani s dobivenim id-om, a to je id od product-a kojeg promatramo)
     useEffect(()=>{
@@ -69,7 +69,7 @@ function Reviews(props) {
         setIsLoading2(true);
         //sad šaljemo podatke serveru (post request)
         try{
-            const response = await axios.post('http://localhost:8080/reviews', newReview, {withCredentials: true});
+            const response = await axios.post(`http://localhost:8080/reviews/${id}`, newReview, {withCredentials: true});
             //console.log(response.data);
             setIsLoading2(false);
             if(typeof(response.data) === "string" ){
@@ -92,7 +92,7 @@ function Reviews(props) {
                 return(
                 <div className={styles.card} key={item._id}>
                     <p>{item.body} </p>
-                    <p className={styles.author}>Author: {item.author}</p>
+                    <p className={styles.author}>Author: {item.author.username}</p>
                     {isAuthor && 
                         <div className={styles.btnWrapper}>
                             <button className={styles.editBtn} onClick={(e)=>{handleEdit(e, item)}}>Edit</button>

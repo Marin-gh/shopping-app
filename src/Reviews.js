@@ -13,12 +13,11 @@ function Reviews(props) {
 
     const [data, setData] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
-    const [error, setError] = useState(false);
+    const [error, setError] = useState({state: false, msg: ""});
     const [isLoading2, setIsLoading2] = useState(false);
-    const [error2, setError2] = useState(false);
+    const [error2, setError2] = useState({state: false, msg: ""});
     const [newReview, setNewReview] = useState({body:"", product: id});
     const [deleteModalOpen, setDeleteModalOpen] = useState({state: false, url: "", redirect: `/products/${id}`});
-    const [isAuthor, setIsAuthor] = useState(true);
     //user globalna state varijabla koja sadrži objekt (s podatcima o logiranom useru, ako ima koji takav)
     const { user } = useContext(UserContext);
 
@@ -34,14 +33,14 @@ function Reviews(props) {
                 //console.log(fetchedData);
                 //fetchedData.data mi treba biti niz objekata(review-ova)
                 if(typeof(fetchedData.data) === "string" ){
-                    setError(true);
+                    setError({state: true, msg: fetchedData.data});
                 }else{
                     setData(fetchedData.data);
-                    setError(false);
+                    setError({state: false, msg: ""});
                 }
                 setIsLoading(false);
-            }catch{
-                setError(true);
+            }catch(err){
+                setError({state: true, msg: err});
                 setIsLoading(false);
             }
         }
@@ -73,14 +72,14 @@ function Reviews(props) {
             //console.log(response.data);
             setIsLoading2(false);
             if(typeof(response.data) === "string" ){
-                setError2(true);
+                setError2({state: true, msg: response.data});
             }else{
-                setError2(false);
+                setError2({state: false, msg: ""});
                 //history.replace(`/products/${id}`);
                 history.go(0);
             }
-        }catch{
-            setError2(true);
+        }catch(err){
+            setError2({state: true, msg: err});
             setIsLoading2(false);
         }
     }
@@ -93,27 +92,28 @@ function Reviews(props) {
                 <div className={styles.card} key={item._id}>
                     <p>{item.body} </p>
                     <p className={styles.author}>Author: {item.author.username}</p>
-                    {isAuthor && 
+                    {item.author._id === user.id && 
                         <div className={styles.btnWrapper}>
-                            <button className={styles.editBtn} onClick={(e)=>{handleEdit(e, item)}}>Edit</button>
+                            {/*<button className={styles.editBtn} onClick={(e)=>{handleEdit(e, item)}}>Edit</button>*/}
                             <button className={styles.deleteBtn} onClick={(e)=>{handleDelete(e, item)}}>Delete</button>
                         </div>
                     }
                 </div>
                 )})}
             </div>
+            {/*form to add a new review*/}
             {user.isLoggedIn &&
                     <form action="" className={styles.newReviewForm} onSubmit={(e)=>{handleSubmit(e)}}>
                         <label htmlFor="addReview"></label>
                         <textarea id="addReview" rows="6" cols="50" placeholder="Add a new review..." required className={styles.textReview} onChange={(e)=>{setNewReview({body: e.target.value, product: id})}}></textarea>
                         <button type="submit" className={styles.submitBtn}>Add a review</button>
                         {isLoading2 && <span className={styles.isLoading}>is loading (saving a new review)...</span>}
-                        {error2 && <span>Error with adding a new review</span>}
+                        {error2.state && <span>{error2.msg}</span>}
                     </form>
             }
             </>}
             {deleteModalOpen.state && <div className={styles.modalWrapper}><DeleteModal closeModal={[deleteModalOpen, setDeleteModalOpen]} /></div>}
-            {error && <span>Error with fetching data</span>}
+            {error.state && <span>{error.msg}</span>}
         </div>
     )
 }

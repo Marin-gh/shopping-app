@@ -7,7 +7,7 @@ function EditProduct(props) {
 
     const [data, setData] = useState({title:"", description:"", price:"", location:"", image:[]});
     const [isLoading, setIsLoading] = useState(false);
-    const [error, setError] = useState(false);
+    const [error, setError] = useState({state: false, msg: ""});
     const history = useHistory();
 
     //id će biti id od product-a kojeg editiram
@@ -21,14 +21,14 @@ function EditProduct(props) {
                 //console.log(fetchedData);
                 //fetchedData.data mi treba biti traženi objekt(product)
                 if(typeof(fetchedData.data) === "string" ){
-                    setError(true);
+                    setError({state: true, msg: fetchedData.data});
                 }else{
                     setData(fetchedData.data);
-                    setError(false);
+                    setError({state: false, msg: ""});
                 }
                 setIsLoading(false);
-            }catch{
-                setError(true);
+            }catch(err){
+                setError({state: true, msg: err});
                 setIsLoading(false);
             }
         }
@@ -44,13 +44,13 @@ function EditProduct(props) {
             //console.log(response.data);
             setIsLoading(false);
             if(typeof(response.data) === "string" ){
-                setError(true);
+                setError({state: true, msg: response.data});
             }else{
-                setError(false);
+                setError({state: false, msg: ""});
                 history.replace('/products');
             }
-        }catch{
-            setError(true);
+        }catch(err){
+            setError({state: true, msg: err});
             setIsLoading(false);
         }
     }
@@ -79,7 +79,7 @@ function EditProduct(props) {
                 </form>
             </div>
             {isLoading && <span className={styles.isLoading}>is loading...</span>}
-            {error && <span>Error with fetching data</span>}
+            {error.state && <span>{error.msg}</span>}
         </>
     );
 }

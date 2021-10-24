@@ -6,14 +6,14 @@ import DeleteModal from './DeleteModal.js';
 import { ShoppingCartContext } from './App' ;
 import axios from "axios";
 import { useHistory } from 'react-router-dom';
+import { UserContext } from './App';
 
 function Product(props) {
 
     const { id } = useParams();
-    const [isAuthor, setIsAuthor] = useState(true);
     const [data, setData] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
-    const [error, setError] = useState(false);
+    const [error, setError] = useState({state: false, msg: ""});
 
     //state - je li otvoren ili zatvoren; url - endpoint na koji šaljemo delete request; redirect - di će nas preusmjeriti nakon delete-anja
     const [deleteModalOpen, setDeleteModalOpen] = useState({state: false, url: "", redirect: '/products'});
@@ -22,6 +22,10 @@ function Product(props) {
     //const { shoppingCart } = useContext(ShoppingCartContext);
     //dispatchShoppingCart metoda za update-anje shoppingCart globalne state varijable
     const { dispatchShoppingCart } = useContext(ShoppingCartContext);
+
+    //user globalna state varijabla koja sadrži objekt (s podatcima o logiranom useru, ako ima koji takav)
+    //dispatchUser metoda za update-anje user globalne state varijable
+    const { user } = useContext(UserContext);
 
     const history = useHistory();
 
@@ -33,14 +37,14 @@ function Product(props) {
                 //console.log(fetchedData);
                 //fetchedData.data mi treba biti traženi objekt(product)
                 if(typeof(fetchedData.data) === "string" ){
-                    setError(true);
+                    setError({state: true, msg: fetchedData.data});
                 }else{
                     setData(fetchedData.data);
-                    setError(false);
+                    setError({state: false, msg: ""});
                 }
                 setIsLoading(false);
-            }catch{
-                setError(true);
+            }catch(err){
+                setError({state: true, msg: err});
                 setIsLoading(false);
             }
         }
@@ -79,7 +83,7 @@ function Product(props) {
                         <p>Location: {data.location} </p>
                         <p>Price: {data.price} euros</p>
                         <p>Author: {data.author.username}</p>
-                        {isAuthor && 
+                        {data.author._id === user.id && 
                             <div className={styles.btnWrapper}>
                                 <button className={styles.editBtn} onClick={(e)=>{handleEdit(e, data)}}>Edit</button>
                                 <button className={styles.deleteBtn} onClick={(e)=>{handleDelete(e, data)}}>Delete</button>
@@ -94,7 +98,7 @@ function Product(props) {
                     <Reviews id = {id}/>
                 </div>}
             {deleteModalOpen.state && <div className={styles.modalWrapper}><DeleteModal closeModal={[deleteModalOpen, setDeleteModalOpen]} /></div>}
-            {error && <span>Error with fetching data</span>}
+            {error.state && <span>{error.msg}</span>}
         </div>
     )
 }

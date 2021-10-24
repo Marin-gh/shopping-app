@@ -9,7 +9,7 @@ function Login(props) {
     const [data, setData] = useState({username:"", password:""});
 
     const [isLoading, setIsLoading] = useState(false);
-    const [error, setError] = useState(false);
+    const [error, setError] = useState({state: false, msg: ""});
     const history = useHistory();
 
     //user globalna state varijabla koja sadrži objekt (s podatcima o logiranom useru, ako ima koji takav)
@@ -27,17 +27,17 @@ function Login(props) {
             //console.log(response.data);
             setIsLoading(false);
             if(typeof(response.data) === "string" ){
-                setError(true);
+                setError({state: true, msg: response.data});
             }else{
-                setError(false);
+                setError({state: false, msg: ""});
                 const { username, email } = response.data;
                 console.log(`logged user: USERNAME: ${username}, EMAIL: ${email}`);
                 //update-amo globalnu user varijablu ako smo se uspješno logirali
                 dispatchUser({type: 'add/login', data: response.data});
                 history.go(-1);
             }
-        }catch{
-            setError(true);
+        }catch(err){
+            setError({state: true, msg: err});
             setIsLoading(false);
         }
     }
@@ -56,7 +56,7 @@ function Login(props) {
                 <button type="submit" className={styles.submitBtn}>Login</button>
             </form>
             {isLoading && <span>Is loading....</span>}
-            {error && <span>Error with login....</span>}
+            {error.state && <span>{error.msg}</span>}
         </div>   
     );
 }

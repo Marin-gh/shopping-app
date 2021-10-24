@@ -7,7 +7,7 @@ function NewProduct(props) {
 
     const [data, setData] = useState({title:"", description:"", price:"", location:"", image:[]});
     const [isLoading, setIsLoading] = useState(false);
-    const [error, setError] = useState(false);
+    const [error, setError] = useState({state: false, msg: ""});
     const history = useHistory();
 
     async function handleSubmit(e){
@@ -19,13 +19,13 @@ function NewProduct(props) {
             //console.log(response.data);
             setIsLoading(false);
             if(typeof(response.data) === "string" ){
-                setError(true);
+                setError({state: true, msg: response.data});
             }else{
-                setError(false);
+                setError({state: false, msg: ""});
                 history.replace('/products');
             }
-        }catch{
-            setError(true);
+        }catch(err){
+            setError({state: true, msg: err});
             setIsLoading(false);
         }
     }
@@ -53,7 +53,7 @@ function NewProduct(props) {
                 </form>
             </div>
             {isLoading && <span className={styles.isLoading}>is loading...</span>}
-            {error && <span>Error....</span>}
+            {error.state && <span>{error.msg}</span>}
         </>
     );
 }

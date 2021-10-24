@@ -12,6 +12,9 @@ function Navbar(props) {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isModalOpen2, setIsModalOpen2] = useState(false);
 
+    const [isLoading, setIsLoading] = useState(false);
+    const [error, setError] = useState({state: false, msg: ""});
+
     //shoppingCart globalna state varijabla koja sadrži niz objekata/produkata koji su u košarici
     const { shoppingCart } = useContext(ShoppingCartContext);
     //dispatchShoppingCart metoda za update-anje shoppingCart globalne state varijable
@@ -41,21 +44,25 @@ function Navbar(props) {
     async function handleLogout(e){
       e.preventDefault();
       setIsModalOpen(false);
-      //update-amo globalnu user varijablu
-      dispatchUser({type: 'remove/logout'});
+      setIsLoading(true);
       //sad šaljemo request serveru na '/logout' da odlogira user-a iz login server session
       try{
           //odlogirat ćemo user-a (iz login server session i maknuti iz naše client session tako da update-amo našu client session)
           const response = await axios.get('http://localhost:8080/logout', {withCredentials: true});
           //console.log(response.data);
+          setIsLoading(false);
           if(typeof(response.data) === "string" ){
-              console.log(response.data);
+              setError({state: true, msg: response.data});
           }else{
+              setError({state: false, msg: ""});
               const { username, email } = response.data;
               console.log(`removing user: USERNAME: ${username}, EMAIL: ${email}`);
+              //update-amo globalnu user varijablu ako smo se uspješno odlogirali
+              dispatchUser({type: 'remove/logout'});
           }
-      }catch(error){
-        console.log(error);
+      }catch(err){
+          setError({state: true, msg: err});
+          setIsLoading(false);
       }
   }
 
@@ -83,7 +90,13 @@ function Navbar(props) {
                         <Link to='/newProduct' onClick={()=>{setIsModalOpen(false)}}>New Product</Link>
                     </li>
                     <li>
-                        <div className="logout" onClick={(e)=>{handleLogout(e)}}>Logout</div>
+                        {(!isLoading && !error.state) ? 
+                            <div className="logout" onClick={(e)=>{setIsModalOpen(false); handleLogout(e)}}>Logout</div> :
+                            <>
+                                {isLoading && <span>Is loading....</span>}
+                                {error.state && <span>{error.msg}</span>}
+                            </>
+                        }
                     </li>
                   </>
                 }

@@ -9,7 +9,7 @@ function Register(props) {
     const [data, setData] = useState({username:"", password:"", email:""});
 
     const [isLoading, setIsLoading] = useState(false);
-    const [error, setError] = useState(false);
+    const [error, setError] = useState({state: false, msg: ""});
     const history = useHistory();
 
     //user globalna state varijabla koja sadrži objekt (s podatcima o logiranom useru, ako ima koji takav)
@@ -27,15 +27,15 @@ function Register(props) {
             //console.log(response.data);
             setIsLoading(false);
             if(typeof(response.data) === "string" ){
-                setError(true);
+                setError({state: true, msg: response.data});
             }else{
-                setError(false);
+                setError({state: false, msg: ""});
                 //update-amo globalnu user varijablu ako smo uspješno registrirali user-a
                 dispatchUser({type: 'add/login', data: response.data});
                 history.go(-1);
             }
-        }catch{
-            setError(true);
+        }catch(err){
+            setError({state: true, msg: err});
             setIsLoading(false);
         }
     }
@@ -57,7 +57,7 @@ function Register(props) {
                 <button type="submit" className={styles.submitBtn}>Register</button>
             </form>
             {isLoading && <span>Is loading....</span>}
-            {error && <span>Error with registering....</span>}
+            {error.state && <span>{error.msg}</span>}
         </div>
     );
 }

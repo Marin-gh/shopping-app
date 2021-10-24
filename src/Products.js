@@ -1,17 +1,21 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import styles from './Products.module.css';
 import DeleteModal from './DeleteModal.js';
 import axios from "axios";
 import { useHistory } from 'react-router-dom';
+import { UserContext } from './App';
 
 function Products(props) {
 
     const [data, setData] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
-    const [error, setError] = useState(false);
-    const [isAuthor, setIsAuthor] = useState(true);
+    const [error, setError] = useState({state: false, msg: ""});
     const [deleteModalOpen, setDeleteModalOpen] = useState({state: false, url: "", redirect: '/products'});
+
+    //user globalna state varijabla koja sadrži objekt (s podatcima o logiranom useru, ako ima koji takav)
+    //dispatchUser metoda za update-anje user globalne state varijable
+    const { user } = useContext(UserContext);
 
     const history = useHistory();
 
@@ -23,15 +27,15 @@ function Products(props) {
                 //console.log(fetchedData);
                 //fetchedData.data mi treba biti niz objekata(produkata)
                 if(typeof(fetchedData.data) === "string" ){
-                    setError(true);
+                    setError({state: true, msg: fetchedData.data});
                 }else{
-                    console.dir(fetchedData.data);
+                    //console.dir(fetchedData.data);
                     setData(fetchedData.data);
-                    setError(false);
+                    setError({state: false, msg: ""});
                 }
                 setIsLoading(false);
-            }catch{
-                setError(true);
+            }catch(err){
+                setError({state: true, msg: err});
                 setIsLoading(false);
             }
         }
@@ -64,7 +68,7 @@ function Products(props) {
                         <p>Price: {item.price} euros</p>
                         <p>Author: {item.author.username}</p>
                     </Link>
-                    {isAuthor && 
+                    {item.author._id === user.id && 
                         <div className={styles.btnWrapper}><button className={styles.editBtn} onClick={(e)=>{handleEdit(e, item)}}>Edit</button>
                         <button className={styles.deleteBtn} onClick={(e)=>{handleDelete(e, item)}}>Delete</button></div>
                     }
@@ -72,7 +76,7 @@ function Products(props) {
                 )})}
             </div>}
             {deleteModalOpen.state && <div className={styles.modalWrapper}><DeleteModal closeModal={[deleteModalOpen, setDeleteModalOpen]} /></div>}
-            {error && <span>Error with fetching data</span>}
+            {error.state && <span>{error.msg}</span>}
         </div>
     )
 }

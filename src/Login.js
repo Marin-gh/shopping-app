@@ -34,6 +34,7 @@ function Login(props) {
                 console.log(`logged user: USERNAME: ${username}, EMAIL: ${email}`);
                 //update-amo globalnu user varijablu ako smo se uspješno logirali
                 dispatchUser({type: 'add/login', data: response.data});
+                //vraćamo se odakle smo došli na login
                 history.go(-1);
             }
         }catch(err){

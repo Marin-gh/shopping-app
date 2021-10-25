@@ -4,7 +4,8 @@ import styles from './App.module.css';
 import {
   BrowserRouter as Router,
   Switch,
-  Route
+  Route,
+  Redirect
 } from "react-router-dom";
 import Home from './Home';
 import Navbar from './Navbar';
@@ -172,10 +173,10 @@ function App() {
                     <Register />
                   </Route>
                   <Route exact path="/newProduct">
-                    <NewProduct />
+                    {!(user.isLoggedIn) ? <Redirect to="/login" /> : <NewProduct />}
                   </Route>
                   <Route exact path="/editProduct/:id">
-                    <EditProduct />
+                    {!(user.isLoggedIn) ? <Redirect to="/login" /> : <EditProduct />}
                   </Route>
                   <Route exact path="/error">
                     <Error />

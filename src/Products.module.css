@@ -135,13 +135,6 @@
     }
 }
 
-
-@media(min-width:1200px){
-    .cardWrapper button{
-      font-size: 1rem;
-    }
-}
-
 /*keyframes*/
 
 @keyframes rotateLoading{

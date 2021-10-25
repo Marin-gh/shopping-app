@@ -90,8 +90,8 @@ function Reviews(props) {
             {data && <><div className={styles.title}>Reviews:</div><div className={styles.cardWrapper}>{data.map((item)=>{
                 return(
                 <div className={styles.card} key={item._id}>
-                    <p>{item.body} </p>
-                    <p className={styles.author}>Author: {item.author.username}</p>
+                    <p className={styles.author}>{item.author.username}:</p>
+                    <p className={styles.reviewBody}>"{item.body}"</p>
                     {item.author._id === user.id && 
                         <div className={styles.btnWrapper}>
                             {/*<button className={styles.editBtn} onClick={(e)=>{handleEdit(e, item)}}>Edit</button>*/}

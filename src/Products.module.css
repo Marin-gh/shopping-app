@@ -64,6 +64,7 @@
     margin-top: 5px;
     margin-bottom: 5px;
     padding: 5px;
+    cursor: pointer;
   }
   
 .deleteBtn{
@@ -73,6 +74,7 @@
     font-weight: 600;
     margin: 5px;
     padding: 5px;
+    cursor: pointer;
   }
   
 .btnWrapper{

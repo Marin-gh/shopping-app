@@ -94,7 +94,7 @@ function Product(props) {
                         </div>
                     </div>
 
-                    {/*Reviews component kojoj cu proslijediti id producta da dohvatim sve review-ove povezano s ovim product-om*/}
+                    {/*Reviews component kojoj cu proslijediti id producta da dohvatim sve review-ove povezane s ovim product-om*/}
                     <Reviews id = {id}/>
                 </div>}
             {deleteModalOpen.state && <div className={styles.modalWrapper}><DeleteModal closeModal={[deleteModalOpen, setDeleteModalOpen]} /></div>}

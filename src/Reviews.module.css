@@ -56,6 +56,20 @@
     font-weight: 800;
 }
 
+.authorAndRating{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.ratingView{
+    padding: 5px;
+}
+
+.rating{
+    padding: 5px;
+}
+
 .reviewBody{
     font-style: italic;
     font-size: 0.9rem;
@@ -70,6 +84,7 @@
     margin-top: 5px;
     margin-bottom: 5px;
     padding: 5px;
+    cursor: pointer;
   }
   
 .deleteBtn{
@@ -79,6 +94,7 @@
     font-weight: 600;
     margin: 5px;
     padding: 5px;
+    cursor: pointer;
   }
   
 .btnWrapper{
@@ -87,9 +103,24 @@
 }
 
 .newReviewForm{
+    margin-top: 20px;
+    border: 2px solid black;
+    border-radius: 10px;
+    padding: 10px;
     width: 100%;
     display: flex;
     flex-direction: column;
+}
+
+.labelAndRating{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.labelRating{
+    font-size: 0.9rem;
+    font-weight: 500;
 }
 
 .submitBtn{
@@ -100,6 +131,7 @@
     margin-top: 5px;
     margin-bottom: 5px;
     padding: 5px;
+    cursor: pointer;
 }
 
 .submitBtn:hover{
@@ -107,12 +139,11 @@
 }
 
 .textReview{
-    margin-top: 20px;
     padding: 10px;
     width: 100%;
     height: auto;
     box-sizing: border-box;
-    border: 2px solid black;
+    border: 2px solid #00000078;
     border-radius: 10px;
     background-color: rgb(247, 239, 239);
     outline: none;
@@ -169,14 +200,11 @@
     }
     
     .reviewBody{
-        font-style: italic;
         font-size: 1rem;
     }
-}
 
-@media(min-width:1200px){
-    .cardWrapper button{
-      font-size: 1rem;
+    .labelRating{
+        font-size: 1rem;
     }
 }
 

@@ -5,6 +5,7 @@ import axios from "axios";
 import { useHistory } from 'react-router-dom';
 import DeleteModal from './DeleteModal.js';
 //import { useRef } from 'react';
+import { Rating, RatingView } from 'react-simple-star-rating';
 
 function Reviews(props) {
 
@@ -16,7 +17,7 @@ function Reviews(props) {
     const [error, setError] = useState({state: false, msg: ""});
     const [isLoading2, setIsLoading2] = useState(false);
     const [error2, setError2] = useState({state: false, msg: ""});
-    const [newReview, setNewReview] = useState({body:"", product: id});
+    const [newReview, setNewReview] = useState({body:"", product: id, rating: 0});
     const [deleteModalOpen, setDeleteModalOpen] = useState({state: false, url: "", redirect: `/products/${id}`});
     //user globalna state varijabla koja sadrži objekt (s podatcima o logiranom useru, ako ima koji takav)
     const { user } = useContext(UserContext);
@@ -90,7 +91,10 @@ function Reviews(props) {
             {data && <><div className={styles.title}>Reviews:</div><div className={styles.cardWrapper}>{data.map((item)=>{
                 return(
                 <div className={styles.card} key={item._id}>
-                    <p className={styles.author}>{item.author.username}:</p>
+                    <div className={styles.authorAndRating}>
+                        <p className={styles.author}>{item.author.username}:</p>
+                        <RatingView ratingValue={item.rating} className={styles.ratingView} size={20}/>
+                    </div>     
                     <p className={styles.reviewBody}>"{item.body}"</p>
                     {item.author._id === user.id && 
                         <div className={styles.btnWrapper}>
@@ -106,6 +110,10 @@ function Reviews(props) {
                     <form action="" className={styles.newReviewForm} onSubmit={(e)=>{handleSubmit(e)}}>
                         <label htmlFor="addReview"></label>
                         <textarea id="addReview" rows="6" cols="50" placeholder="Add a new review..." required className={styles.textReview} onChange={(e)=>{setNewReview({body: e.target.value, product: id})}}></textarea>
+                        <div className={styles.labelAndRating}>
+                            <label htmlFor="addRating"className={styles.labelRating}>Choose a rating:</label>
+                            <Rating onClick={(rate)=>{setNewReview({...newReview, rating: rate})}} ratingValue={newReview.rating} className={styles.rating} transition={true}/>
+                        </div>
                         <button type="submit" className={styles.submitBtn}>Add a review</button>
                         {isLoading2 && <span className={styles.isLoading}>is loading (saving a new review)...</span>}
                         {error2.state && <span>{error2.msg}</span>}

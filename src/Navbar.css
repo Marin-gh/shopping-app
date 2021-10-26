@@ -55,9 +55,14 @@
     display: flex;
     justify-content: space-between;
   }
+
+  .navIcons i{
+    cursor: pointer;
+  }
   
   .shoppingIcon{
     display: none;
+    cursor: pointer;
   }
 
   .shoppCartModal{

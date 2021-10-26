@@ -7,6 +7,7 @@ import { ShoppingCartContext } from './App' ;
 import axios from "axios";
 import { useHistory } from 'react-router-dom';
 import { UserContext } from './App';
+import { RatingView } from 'react-simple-star-rating';
 
 function Product(props) {
 
@@ -61,7 +62,7 @@ function Product(props) {
     function handleDelete(e, item){
         e.stopPropagation();
         console.log(`You clicked delete button: ${e.target}, ${item._id}`);
-        setDeleteModalOpen({state:true, url: `http://localhost:8080/products/${item._id}`, redirect: '/products'});
+        setDeleteModalOpen({state: true, url: `http://localhost:8080/products/${item._id}`, redirect: '/products'});
     }
 
     function handleAddToCart(e, item){
@@ -83,6 +84,7 @@ function Product(props) {
                         <p>Location: {data.location} </p>
                         <p>Price: {data.price} euros</p>
                         <p>Author: {data.author.username}</p>
+                        <RatingView ratingValue={data.avgRating} size={20}/>
                         {data.author._id === user.id && 
                             <div className={styles.btnWrapper}>
                                 <button className={styles.editBtn} onClick={(e)=>{handleEdit(e, data)}}>Edit</button>

@@ -5,10 +5,11 @@ import DeleteModal from './DeleteModal.js';
 import axios from "axios";
 import { useHistory } from 'react-router-dom';
 import { UserContext } from './App';
+import { RatingView } from 'react-simple-star-rating';
 
 function Products(props) {
 
-    const [data, setData] = useState(null);
+    const [data, setData] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState({state: false, msg: ""});
     const [deleteModalOpen, setDeleteModalOpen] = useState({state: false, url: "", redirect: '/products'});
@@ -57,7 +58,7 @@ function Products(props) {
     return (
         <div className={styles.productsLayout}>
             {isLoading && <span className={styles.isLoading}>is loading...</span>}
-            {data && <div className={styles.cardWrapper}>{data.map((item)=>{
+            {data.length!==0 && <div className={styles.cardWrapper}>{data.map((item)=>{
                 return(
                 <div className={styles.card} key={item._id}>
                     <Link to={`/products/${item._id}`} className={styles.link} >
@@ -67,6 +68,7 @@ function Products(props) {
                         <p>Location: {item.location} </p>
                         <p>Price: {item.price} euros</p>
                         <p>Author: {item.author.username}</p>
+                        <RatingView ratingValue={item.avgRating} size={20}/>
                     </Link>
                     {item.author._id === user.id && 
                         <div className={styles.btnWrapper}><button className={styles.editBtn} onClick={(e)=>{handleEdit(e, item)}}>Edit</button>

@@ -12,7 +12,7 @@ function Reviews(props) {
     //id product-a čije review-e želimo izlistati
     const id = props.id;
 
-    const [data, setData] = useState(null);
+    const [data, setData] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState({state: false, msg: ""});
     const [isLoading2, setIsLoading2] = useState(false);
@@ -49,12 +49,14 @@ function Reviews(props) {
     },[id]);
 
 
+    /*
     //edit review
     function handleEdit(e, item){
         e.stopPropagation();
         console.log(`You clicked edit button: ${e.target}, ${item._id}`);
         //sad bi trebalo omogućiti fokus na review koji želimo editirati i dodati "save" i "cancel" button
     }
+    */
 
     //delete review (događa se u DeleteModal.js nakon klika na "Yes")
     function handleDelete(e, item){
@@ -88,28 +90,31 @@ function Reviews(props) {
     return (
         <div className={styles.reviewsLayout}>
             {isLoading && <span className={styles.isLoading}>is loading...</span>}
-            {data && <><div className={styles.title}>Reviews:</div><div className={styles.cardWrapper}>{data.map((item)=>{
-                return(
-                <div className={styles.card} key={item._id}>
-                    <div className={styles.authorAndRating}>
-                        <p className={styles.author}>{item.author.username}:</p>
-                        <RatingView ratingValue={item.rating} className={styles.ratingView} size={20}/>
-                    </div>     
-                    <p className={styles.reviewBody}>"{item.body}"</p>
-                    {item.author._id === user.id && 
-                        <div className={styles.btnWrapper}>
-                            {/*<button className={styles.editBtn} onClick={(e)=>{handleEdit(e, item)}}>Edit</button>*/}
-                            <button className={styles.deleteBtn} onClick={(e)=>{handleDelete(e, item)}}>Delete</button>
-                        </div>
-                    }
-                </div>
+            {data.length!==0 && <>
+                <div className={styles.title}>Reviews:</div>
+                <div className={styles.cardWrapper}>{data.map((item)=>{
+                    return(
+                    <div className={styles.card} key={item._id}>
+                        <div className={styles.authorAndRating}>
+                            <p className={styles.author}>{item.author.username}:</p>
+                            <RatingView ratingValue={item.rating} className={styles.ratingView} size={20}/>
+                        </div>     
+                        <p className={styles.reviewBody}>"{item.body}"</p>
+                        {item.author._id === user.id && 
+                            <div className={styles.btnWrapper}>
+                                {/*<button className={styles.editBtn} onClick={(e)=>{handleEdit(e, item)}}>Edit</button>*/}
+                                <button className={styles.deleteBtn} onClick={(e)=>{handleDelete(e, item)}}>Delete</button>
+                            </div>
+                        }
+                    </div>
                 )})}
-            </div>
+                </div>
+            </>}
             {/*form to add a new review*/}
             {user.isLoggedIn &&
                     <form action="" className={styles.newReviewForm} onSubmit={(e)=>{handleSubmit(e)}}>
                         <label htmlFor="addReview"></label>
-                        <textarea id="addReview" rows="6" cols="50" placeholder="Add a new review..." required className={styles.textReview} onChange={(e)=>{setNewReview({body: e.target.value, product: id})}}></textarea>
+                        <textarea id="addReview" rows="6" cols="50" placeholder="Add a new review..." required className={styles.textReview} onChange={(e)=>{setNewReview({...newReview, body: e.target.value})}}></textarea>
                         <div className={styles.labelAndRating}>
                             <label htmlFor="addRating"className={styles.labelRating}>Choose a rating:</label>
                             <Rating onClick={(rate)=>{setNewReview({...newReview, rating: rate})}} ratingValue={newReview.rating} className={styles.rating} transition={true}/>
@@ -119,7 +124,6 @@ function Reviews(props) {
                         {error2.state && <span>{error2.msg}</span>}
                     </form>
             }
-            </>}
             {deleteModalOpen.state && <div className={styles.modalWrapper}><DeleteModal closeModal={[deleteModalOpen, setDeleteModalOpen]} /></div>}
             {error.state && <span>{error.msg}</span>}
         </div>

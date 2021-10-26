@@ -68,7 +68,7 @@ function Products(props) {
                         <p>Location: {item.location} </p>
                         <p>Price: {item.price} euros</p>
                         <p>Author: {item.author.username}</p>
-                        <RatingView ratingValue={item.avgRating} size={20}/>
+                        <RatingView ratingValue={Math.round(item.avgRating)} size={20}/>
                     </Link>
                     {item.author._id === user.id && 
                         <div className={styles.btnWrapper}><button className={styles.editBtn} onClick={(e)=>{handleEdit(e, item)}}>Edit</button>

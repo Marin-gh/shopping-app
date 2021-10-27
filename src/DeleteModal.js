@@ -57,10 +57,10 @@ function DeleteModal(props) {
     return (
         <Draggable>
             <div className={styles.modal}>
-                <div className={styles.title}>Do you want to delete the product?</div>
+                <div className={styles.title}>Are you sure you want to delete?</div>
                 <div className={styles.btnWrapper}>
-                    <button onClick={(e)=>{handleYes(e)}}>Yes</button>
-                    <button onClick={(e)=>{handleNo(e)}}>No</button>
+                    <button onClick={(e)=>{handleYes(e)}} className={styles.yesBtn}>Yes</button>
+                    <button onClick={(e)=>{handleNo(e)}} className={styles.noBtn}>No</button>
                 </div>
                 {isLoading && <span>is loading...</span>}
                 {error.state && <span>{error.msg}</span>}

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import styles from './DeleteModal.module.css';
 import axios from "axios";
 import { useHistory } from 'react-router-dom';
+import Draggable from 'react-draggable';
 
 function DeleteModal(props) {
 
@@ -54,7 +55,7 @@ function DeleteModal(props) {
 
 
     return (
-        
+        <Draggable>
             <div className={styles.modal}>
                 <div className={styles.title}>Do you want to delete the product?</div>
                 <div className={styles.btnWrapper}>
@@ -64,6 +65,7 @@ function DeleteModal(props) {
                 {isLoading && <span>is loading...</span>}
                 {error.state && <span>{error.msg}</span>}
             </div>
+        </Draggable>
     );
 }
 

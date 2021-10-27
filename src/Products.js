@@ -63,16 +63,21 @@ function Products(props) {
                 <div className={styles.card} key={item._id}>
                     <Link to={`/products/${item._id}`} className={styles.link} >
                         <img src={item.image[0]} className={styles.cardImage} alt="productImage"></img>
+                        <div className={styles.ratingViewAndSpan}>
+                            <RatingView ratingValue={Math.round(item.avgRating)} size={20} className={styles.ratingView}/>
+                            <span className={styles.avgRatingText}>({item.avgRating.toFixed(1)})</span>
+                        </div>
                         <p>Title: {item.title} </p>
                         <p>Description: {item.description} </p>
                         <p>Location: {item.location} </p>
                         <p>Price: {item.price} euros</p>
                         <p>Author: {item.author.username}</p>
-                        <RatingView ratingValue={Math.round(item.avgRating)} size={20}/>
                     </Link>
                     {item.author._id === user.id && 
-                        <div className={styles.btnWrapper}><button className={styles.editBtn} onClick={(e)=>{handleEdit(e, item)}}>Edit</button>
-                        <button className={styles.deleteBtn} onClick={(e)=>{handleDelete(e, item)}}>Delete</button></div>
+                        <div className={styles.btnWrapper}>
+                            <button className={styles.editBtn} onClick={(e)=>{handleEdit(e, item)}}>Edit</button>
+                            <button className={styles.deleteBtn} onClick={(e)=>{handleDelete(e, item)}}>Delete</button>
+                        </div>
                     }
                 </div>
                 )})}

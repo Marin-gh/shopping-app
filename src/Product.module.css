@@ -26,6 +26,23 @@
     border-bottom: 2px solid rgb(168, 164, 164);
 }
 
+.ratingViewAndSpan{
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
+    align-items: center;
+}
+
+.ratingView{
+    max-height: max-content;
+}
+
+.avgRatingText{
+    padding-left: 5px;
+    max-height: max-content;
+    padding-bottom: 7px;
+}
+
 .editBtn{
     background-color: wheat;
     border: 2px solid rgb(184, 103, 27);
@@ -86,10 +103,6 @@
     top: 30vh;
     width: 250px;
     height: auto;
-    z-index: 100;
-    background-color: rgb(255, 195, 152);
-    border: 8px outset rgb(134, 88, 34);
-    border-radius: 10px;
 }
 
 /*media queries*/

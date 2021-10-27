@@ -79,12 +79,15 @@ function Product(props) {
                     {/*details about product*/}
                     <img src={data.image[0]} className={styles.cardImage} alt="productImage"></img>
                     <div className={styles.content}>
+                        <div className={styles.ratingViewAndSpan}>
+                            <RatingView ratingValue={Math.round(data.avgRating)} size={20} className={styles.ratingView}/>
+                            <span className={styles.avgRatingText}>({data.avgRating.toFixed(1)})</span>
+                        </div>
                         <p>Title: {data.title} </p>
                         <p>Description: {data.description} </p>
                         <p>Location: {data.location} </p>
                         <p>Price: {data.price} euros</p>
                         <p>Author: {data.author.username}</p>
-                        <RatingView ratingValue={Math.round(data.avgRating)} size={20}/>
                         {data.author._id === user.id && 
                             <div className={styles.btnWrapper}>
                                 <button className={styles.editBtn} onClick={(e)=>{handleEdit(e, data)}}>Edit</button>

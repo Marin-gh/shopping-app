@@ -1,11 +1,19 @@
 .modal{
     height: 100%;
+    z-index: 100;
+    background-color: rgb(255, 195, 152);
+    border: 8px outset rgb(134, 88, 34);
+    border-radius: 10px;
 }
 
 .title{
     padding: 20px;
     background-color: rgb(207, 143, 97);
     font-weight: 600;
+}
+
+.title:hover{
+    cursor: grab;
 }
 
 .btnWrapper{

@@ -63,6 +63,26 @@
     margin-bottom: 30px;
 }
 
+.oldImagesWrapper{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.oldImageAndDelete{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.cardImage{
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+    border-bottom: 2px solid rgb(168, 164, 164);
+}
+
 .submitBtn{
     background-color: rgb(255, 255, 221);
     border: 2px solid rgb(214, 214, 214);

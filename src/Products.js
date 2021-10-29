@@ -62,7 +62,7 @@ function Products(props) {
                 return(
                 <div className={styles.card} key={item._id}>
                     <Link to={`/products/${item._id}`} className={styles.link} >
-                        <img src={item.image[0]} className={styles.cardImage} alt="productImage"></img>
+                        {item.images.length!==0 && <img src={item.images[0].url} className={styles.cardImage} alt="productImage"></img>}
                         <div className={styles.ratingViewAndSpan}>
                             <RatingView ratingValue={Math.round(item.avgRating)} size={20} className={styles.ratingView}/>
                             <span className={styles.avgRatingText}>({item.avgRating.toFixed(1)})</span>

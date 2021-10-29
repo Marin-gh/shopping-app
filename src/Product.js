@@ -77,7 +77,7 @@ function Product(props) {
             {data && <div className={styles.card}>
                 
                     {/*details about product*/}
-                    <img src={data.image[0]} className={styles.cardImage} alt="productImage"></img>
+                    {data.images.length!==0 && <img src={data.images[0].url} className={styles.cardImage} alt="productImage"></img>}
                     <div className={styles.content}>
                         <div className={styles.ratingViewAndSpan}>
                             <RatingView ratingValue={Math.round(data.avgRating)} size={20} className={styles.ratingView}/>

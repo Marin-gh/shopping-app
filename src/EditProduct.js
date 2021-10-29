@@ -5,7 +5,7 @@ import { useHistory, useParams } from 'react-router-dom';
 
 function EditProduct(props) {
 
-    const [data, setData] = useState({title:"", description:"", price:"", location:"", image:[]});
+    const [data, setData] = useState({title:"", description:"", price:"", location:"", images:[], oldImages:[]});
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState({state: false, msg: ""});
     const history = useHistory();
@@ -23,7 +23,8 @@ function EditProduct(props) {
                 if(typeof(fetchedData.data) === "string" ){
                     setError({state: true, msg: fetchedData.data});
                 }else{
-                    setData(fetchedData.data);
+                    const { images } = fetchedData.data;
+                    setData({...fetchedData.data, images: [], oldImages: images});
                     setError({state: false, msg: ""});
                 }
                 setIsLoading(false);
@@ -40,7 +41,19 @@ function EditProduct(props) {
         setIsLoading(true);
         //sad šaljemo podatke serveru (put request)
         try{
-            const response = await axios.put(`http://localhost:8080/products/${id}`, data, {withCredentials: true});
+            //FormData() je format u kojem ćemo serveru slati data (budući da data sadrži i file(s))
+            const dataToSend = new FormData();
+            //pod propertyjem (key-em) .images ćemo puniti podatke o svakom upload-anom file-u (image-u)
+            for(let i=0; i<data.images.length; i++){
+                dataToSend.append('images', data.images[i]);
+            };
+            dataToSend.append('title', data.title);
+            dataToSend.append('description', data.description);
+            dataToSend.append('price', parseInt(data.price));
+            dataToSend.append('location', data.location);
+            dataToSend.append('oldImages', JSON.stringify(data.oldImages));
+            //console.log(dataToSend.getAll('oldImages'));
+            const response = await axios({method: 'PUT', url: `http://localhost:8080/products/${id}`, data: dataToSend, withCredentials: true, headers: {"Content-Type":"multipart/form-data"}});
             //console.log(response.data);
             setIsLoading(false);
             if(typeof(response.data) === "string" ){
@@ -53,7 +66,14 @@ function EditProduct(props) {
             setError({state: true, msg: err});
             setIsLoading(false);
         }
-    }
+    };
+
+    function handleRemoveIcon(e, oldImageToRemove){
+        const updatedOldImages = data.oldImages.filter((item)=>{
+            return item !== oldImageToRemove;
+        });
+        setData({...data, oldImages: updatedOldImages});
+    };
 
 
     return (
@@ -70,16 +90,28 @@ function EditProduct(props) {
                     <input type="text" id="prodLocation" placeholder="location" required value={data.location} onChange={(e)=>{setData({...data, location:e.target.value})}}></input>
 
                     <label htmlFor="prodPrice">Price:</label>
-                    <input type="text" id="prodPrice" placeholder="price" required value={data.price} onChange={(e)=>{setData({...data, price:parseInt(e.target.value)})}}></input>
+                    <input type="text" id="prodPrice" placeholder="price" required value={data.price} onChange={(e)=>{setData({...data, price: e.target.value})}}></input>
 
-                    <label htmlFor="prodImg">Image:</label>
-                    <input type="text" id="prodImg" placeholder="image" required value={data.image[0] || ''} onChange={(e)=>{setData({...data, image: [e.target.value]})}}></input>
+                    <label htmlFor="prodImg">New Image(s):</label>
+                    <input type="file" id="prodImg" placeholder="image(s)" multiple onChange={(e)=>{setData({...data, images: e.target.files})}}></input>
 
                     <button type="submit" className={styles.submitBtn}>Save</button>
                 </form>
+                {isLoading && <span className={styles.isLoading}>is loading...</span>}
+                {error.state && <span>{error.msg}</span>}
+                {data.oldImages.length!==0 && 
+                    <div className={styles.oldImagesWrapper}>
+                        {data.oldImages.map((oldImage)=>{
+                            return(
+                                <div className={styles.oldImageAndDelete} key={oldImage.filename}>
+                                    <img src={oldImage.url} className={styles.cardImage} alt="productImage"></img>
+                                    <div className={styles.removeIcon} onClick={(e)=>{handleRemoveIcon(e, oldImage)}}><i className="fas fa-minus-circle"></i></div>
+                                </div>
+                            );
+                        })}
+                    </div>
+                }
             </div>
-            {isLoading && <span className={styles.isLoading}>is loading...</span>}
-            {error.state && <span>{error.msg}</span>}
         </>
     );
 }

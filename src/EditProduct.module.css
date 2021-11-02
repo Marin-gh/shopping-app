@@ -66,14 +66,26 @@
 .oldImagesWrapper{
     display: flex;
     flex-direction: row;
-    justify-content: space-around;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    max-width: 100%;
+}
+
+.askMsg{
+    color: black;
+    font-weight: 500;
+    display: block;
+    text-align: left;
 }
 
 .oldImageAndDelete{
     display: flex;
     flex-direction: row;
-    justify-content: space-around;
-    align-items: center;
+    justify-content: center;
+    align-items: flex-start;
+    margin: 10px;
+    box-sizing: border-box;
+    width: 25%;
 }
 
 .cardImage{
@@ -134,9 +146,14 @@
 }
 
 
-@media(min-width:100px){
+@media(min-width:1000px){
     .isLoading{
         font-size: 1.2rem;
+    }
+
+    .oldImageAndDelete{
+        max-width: 15%;
+        min-width: 10%;
     }
 }
 

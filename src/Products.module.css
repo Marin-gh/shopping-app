@@ -13,6 +13,7 @@
     grid-gap: 20px;
     grid-auto-rows: minmax(200px, auto);
     cursor: pointer;
+    width: 100%;
 }
 
 .isLoading{
@@ -29,6 +30,7 @@
     text-decoration: none;
     font-size: 1rem;
     font-weight: 600;
+    color: rgb(77, 76, 76);
 }
 
 .card{
@@ -38,10 +40,11 @@
     border: 2px solid rgb(89 99 132);
     border-radius: 5px;
     padding: 10px;
+    box-shadow: 5px 5px 2px 1px rgba(89, 99, 132, 0.3);
 }
 
 .card:hover{
-    transform:scale(1.03);
+    transform: scale(1.03);
 }
 
 .cardImage{
@@ -49,11 +52,6 @@
     height: auto;
     object-fit: contain;
     border-bottom: 2px solid rgb(168, 164, 164);
-}
-
-.link{
-    font-size: 1rem;
-    color: rgb(77, 76, 76);
 }
 
 .ratingViewAndSpan{

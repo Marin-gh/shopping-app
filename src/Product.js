@@ -8,6 +8,8 @@ import axios from "axios";
 import { useHistory } from 'react-router-dom';
 import { UserContext } from './App';
 import { RatingView } from 'react-simple-star-rating';
+import "react-responsive-carousel/lib/styles/carousel.min.css";
+import { Carousel } from 'react-responsive-carousel';
 
 function Product(props) {
 
@@ -77,7 +79,17 @@ function Product(props) {
             {data && <div className={styles.card}>
                 
                     {/*details about product*/}
-                    {data.images.length!==0 && <img src={data.images[0].url} className={styles.cardImage} alt="productImage"></img>}
+                    {data.images.length!==0 && 
+                        <Carousel emulateTouch={true} useKeyboardArrows={true} thumbWidth='30%' width='100%' className={styles.carouselComponent}>
+                            {data.images.map((image, index)=>{
+                                return(
+                                    <div key={image._id} className={styles.cardImageWrapper}>
+                                        <img src={image.url} className={styles.cardImage} alt="productImage"></img>
+                                    </div>
+                                )
+                            })}
+                        </Carousel>
+                    }
                     <div className={styles.content}>
                         <div className={styles.ratingViewAndSpan}>
                             <RatingView ratingValue={Math.round(data.avgRating)} size={20} className={styles.ratingView}/>

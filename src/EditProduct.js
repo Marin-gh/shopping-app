@@ -100,16 +100,19 @@ function EditProduct(props) {
                 {isLoading && <span className={styles.isLoading}>is loading...</span>}
                 {error.state && <span>{error.msg}</span>}
                 {data.oldImages.length!==0 && 
-                    <div className={styles.oldImagesWrapper}>
-                        {data.oldImages.map((oldImage)=>{
-                            return(
-                                <div className={styles.oldImageAndDelete} key={oldImage.filename}>
-                                    <img src={oldImage.url} className={styles.cardImage} alt="productImage"></img>
-                                    <div className={styles.removeIcon} onClick={(e)=>{handleRemoveIcon(e, oldImage)}}><i className="fas fa-minus-circle"></i></div>
-                                </div>
-                            );
-                        })}
-                    </div>
+                    <>
+                        <span className={styles.askMsg}>Do you want to delete any of uploaded images?</span>
+                        <div className={styles.oldImagesWrapper}>
+                            {data.oldImages.map((oldImage)=>{
+                                return(
+                                    <div className={styles.oldImageAndDelete} key={oldImage.filename}>
+                                        <img src={oldImage.url} className={styles.cardImage} alt="productImage"></img>
+                                        <div className={styles.removeIcon} onClick={(e)=>{handleRemoveIcon(e, oldImage)}}><i className="fas fa-times-circle"></i></div>
+                                    </div>
+                                );
+                            })}
+                        </div>
+                    </>
                 }
             </div>
         </>

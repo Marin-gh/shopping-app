@@ -11,19 +11,26 @@
     width: 100%;
     height: auto;
     box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
 }
 
 .content{
     font-size: 1rem;
     color: rgb(77, 76, 76);
     font-weight: 600;
+    margin-top: 10px;
+}
+
+.cardImageWrapper{
+    width: 100%;
+    height: auto;
 }
 
 .cardImage{
     width: 100%;
     height: auto;
     object-fit: contain;
-    border-bottom: 2px solid rgb(168, 164, 164);
 }
 
 .ratingViewAndSpan{
@@ -112,6 +119,11 @@
     .isLoading{
         font-size: 1rem;
     }
+    
+    .carouselComponent{
+        width: 70%;
+        align-self: center;
+    }
 }
 
 @media(min-width:800px){
@@ -133,14 +145,15 @@
         grid-template-columns: 2fr 1fr;
     }
 
-    .cardImage{
+    .carouselComponent{
+        justify-self: center;
         grid-column: 1/2;
+        width: 80%;
     }
 
     .content{
         grid-column: 2/3;
-        align-self: center;
-        justify-self: end;
+        justify-self: center;
     }
 
     .btnWrapper{

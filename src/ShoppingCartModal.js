@@ -58,7 +58,7 @@ function ShoppingCartModal(props) {
                             <div key={item._id} className={styles.shoppingCartOneCard}>
                                 <div className={styles.removeIcon} onClick={(e)=>{handleRemove(e, item)}}><i className="fas fa-minus-circle"></i></div>
                                 <Link to={`/products/${item._id}`} onClick={(e)=>{console.log("You clicked on a link")}}>
-                                    <img className={styles.shoppingCartImage} src={item.image} alt="productImage"></img>
+                                    <img className={styles.shoppingCartImage} src={item.images[0].url} alt="productImage"></img>
                                 </Link>
                                 <p>{item.title}</p>
                                 <p>NoOrders: <input type="number" min="1" max="100" step="1" value={noOrders(item)} onChange={(e)=>{handleNoOrders(e, item)}} onBlur={(e)=>handleNoOrders2(e,item)}></input></p>

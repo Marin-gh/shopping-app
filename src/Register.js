@@ -51,7 +51,7 @@ function Register(props) {
                 <label htmlFor="password">Password:</label>
                 <input type="password" id="password" placeholder="password" required onChange={(e)=>{setData({...data, password:e.target.value})}}></input>
 
-                <label htmlFor="email">Mail:</label>
+                <label htmlFor="email">Email:</label>
                 <input type="email" id="email" placeholder="email" required onChange={(e)=>{setData({...data, email:e.target.value})}}></input>
 
                 <button type="submit" className={styles.submitBtn}>Register</button>

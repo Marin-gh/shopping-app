@@ -17,7 +17,7 @@ function Reviews(props) {
     const [error, setError] = useState({state: false, msg: ""});
     const [isLoading2, setIsLoading2] = useState(false);
     const [error2, setError2] = useState({state: false, msg: ""});
-    const [newReview, setNewReview] = useState({body:"", product: id, rating: 0});
+    const [newReview, setNewReview] = useState({body:"", product: id, rating: 0, date: ""});
     const [deleteModalOpen, setDeleteModalOpen] = useState({state: false, url: "", redirect: `/products/${id}`});
     //user globalna state varijabla koja sadrži objekt (s podatcima o logiranom useru, ako ima koji takav)
     const { user } = useContext(UserContext);
@@ -65,13 +65,31 @@ function Reviews(props) {
         setDeleteModalOpen({state:true, url: `http://localhost:8080/reviews/${item._id}`, redirect: `/products/${id}`});
     }
 
+    function formattedDate(date){
+
+        const dateObj = new Date(date);
+
+        let day = dateObj.getDate();
+        let month = dateObj.getMonth()+1;
+        let year = dateObj.getFullYear();
+        if (day < 10){
+            day = `0${day}`;
+        }
+        if(month < 10){
+            month = `0${month}`;
+        }
+
+        return `${day}-${month}-${year}`;
+    };
+
     //add a new review
     async function handleSubmit(e){
         e.preventDefault();
         setIsLoading2(true);
         //sad šaljemo podatke serveru (post request)
         try{
-            const response = await axios.post(`http://localhost:8080/reviews/${id}`, newReview, {withCredentials: true});
+            const date = new Date(Date.now());
+            const response = await axios.post(`http://localhost:8080/reviews/${id}`, {...newReview, date: date}, {withCredentials: true});
             //console.log(response.data);
             setIsLoading2(false);
             if(typeof(response.data) === "string" ){
@@ -96,10 +114,14 @@ function Reviews(props) {
                     return(
                     <div className={styles.card} key={item._id}>
                         <div className={styles.authorAndRating}>
-                            <p className={styles.author}>{item.author.username}:</p>
+                            <div>
+                                <p className={styles.author}>{item.author.username}:</p>
+                                <p className={styles.date}>({formattedDate(item.date)})</p>
+                            </div>
                             <RatingView ratingValue={item.rating} className={styles.ratingView} size={20}/>
-                        </div>     
-                        <p className={styles.reviewBody}>"{item.body}"</p>
+                        </div>
+                           
+                        <p className={styles.reviewBody}>{item.body}</p>
                         {item.author._id === user.id && 
                             <div className={styles.btnWrapper}>
                                 {/*<button className={styles.editBtn} onClick={(e)=>{handleEdit(e, item)}}>Edit</button>*/}
@@ -114,7 +136,7 @@ function Reviews(props) {
             {user.isLoggedIn &&
                     <form action="" className={styles.newReviewForm} onSubmit={(e)=>{handleSubmit(e)}}>
                         <label htmlFor="addReview"></label>
-                        <textarea id="addReview" rows="6" cols="50" placeholder="Add a new review..." required className={styles.textReview} onChange={(e)=>{setNewReview({...newReview, body: e.target.value})}}></textarea>
+                        <textarea id="addReview" rows="6" cols="50" placeholder="Write a review..." required className={styles.textReview} onChange={(e)=>{setNewReview({...newReview, body: e.target.value})}}></textarea>
                         <div className={styles.labelAndRating}>
                             <label htmlFor="addRating"className={styles.labelRating}>Choose a rating:</label>
                             <Rating onClick={(rate)=>{setNewReview({...newReview, rating: rate})}} ratingValue={newReview.rating} className={styles.rating} transition={true}/>

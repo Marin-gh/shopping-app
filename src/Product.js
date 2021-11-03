@@ -91,24 +91,24 @@ function Product(props) {
                         </Carousel>
                     }
                     <div className={styles.content}>
+                        <p className={styles.title}>{data.title}</p>
+                        <p className={styles.location}>({data.location})</p>
                         <div className={styles.ratingViewAndSpan}>
                             <RatingView ratingValue={Math.round(data.avgRating)} size={20} className={styles.ratingView}/>
                             <span className={styles.avgRatingText}>({data.avgRating.toFixed(1)})</span>
                         </div>
-                        <p>Title: {data.title} </p>
-                        <p>Description: {data.description} </p>
-                        <p>Location: {data.location} </p>
-                        <p>Price: {data.price} euros</p>
-                        <p>Author: {data.author.username}</p>
+                        <p className={styles.description}>Description: {data.description} </p>
+                        <p className={styles.seller}>Seller: {data.author.username}</p>
+                        <p className={styles.price}>{data.price} €</p>
+                        <div className={styles.btnWrapper2}>
+                            <button className={styles.addToCartBtn} onClick={(e)=>{handleAddToCart(e, data)}}>Add to cart</button>
+                        </div>
                         {data.author._id === user.id && 
                             <div className={styles.btnWrapper}>
                                 <button className={styles.editBtn} onClick={(e)=>{handleEdit(e, data)}}>Edit</button>
                                 <button className={styles.deleteBtn} onClick={(e)=>{handleDelete(e, data)}}>Delete</button>
                             </div>
                         }
-                        <div className={styles.btnWrapper2}>
-                            <button className={styles.addToCartBtn} onClick={(e)=>{handleAddToCart(e, data)}}>Add to cart</button>
-                        </div>
                     </div>
 
                     {/*Reviews component kojoj cu proslijediti id producta da dohvatim sve review-ove povezane s ovim product-om*/}

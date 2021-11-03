@@ -63,15 +63,15 @@ function Products(props) {
                 <div className={styles.card} key={item._id}>
                     <Link to={`/products/${item._id}`} className={styles.link} >
                         {item.images.length!==0 && <img src={item.images[0].url} className={styles.cardImage} alt="productImage"></img>}
+                        <p className={styles.title}>{item.title}</p>
+                        <p className={styles.location}>({item.location})</p>
                         <div className={styles.ratingViewAndSpan}>
                             <RatingView ratingValue={Math.round(item.avgRating)} size={20} className={styles.ratingView}/>
                             <span className={styles.avgRatingText}>({item.avgRating.toFixed(1)})</span>
                         </div>
-                        <p>Title: {item.title} </p>
-                        <p>Description: {item.description} </p>
-                        <p>Location: {item.location} </p>
-                        <p>Price: {item.price} euros</p>
-                        <p>Author: {item.author.username}</p>
+                        <p className={styles.description}>{item.description}</p>
+                        <p className={styles.seller}>Seller: {item.author.username}</p>
+                        <p className={styles.price}>{item.price} €</p>
                     </Link>
                     {item.author._id === user.id && 
                         <div className={styles.btnWrapper}>

@@ -20,6 +20,40 @@
     color: rgb(77, 76, 76);
     font-weight: 600;
     margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.title{
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #444e70;
+}
+
+.location{
+    color: #73716fa1;
+    font-size: 0.9rem;
+}
+
+.seller{
+    align-self: flex-end;
+    color: #73716fa1;
+    font-style: italic;
+    font-size: 0.8rem;
+}
+
+.description{
+    font-family: "Times New Roman", Times, serif;
+    padding: 5px 0;
+    font-size: 1rem;
+}
+
+.price{
+    color: #444e70;
+    font-size: 1.2rem;
+    font-weight: 800;
+    align-self: flex-end;
 }
 
 .cardImageWrapper{
@@ -38,6 +72,7 @@
     flex-direction: row;
     justify-content: start;
     align-items: center;
+    border-bottom: 2px solid #73716fa1;
 }
 
 .ratingView{
@@ -124,12 +159,36 @@
         width: 70%;
         align-self: center;
     }
+
+    .addToCartBtn{
+        font-size: 1rem;
+    }
 }
 
 @media(min-width:800px){
 
     .modalWrapper{
         width: 350px;
+    }
+
+    .title{
+        font-size: 1.3rem;
+    }
+    
+    .location{
+        font-size: 1rem;
+    }
+    
+    .seller{
+        font-size: 0.9rem;
+    }
+    
+    .description{
+        font-size: 1.1rem;
+    }
+    
+    .price{
+        font-size: 1.3rem;
     }
     
 }
@@ -153,7 +212,6 @@
 
     .content{
         grid-column: 2/3;
-        justify-self: center;
     }
 
     .btnWrapper{

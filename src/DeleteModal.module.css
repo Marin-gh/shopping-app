@@ -1,7 +1,8 @@
 .modal{
     height: 100%;
     z-index: 1000;
-    background-color: rgb(68 81 141);
+    background-color: rgb(63 73 118);
+    border: 7px solid rgb(227 232 250);
     border-radius: 10px;
     color: whitesmoke;
 }

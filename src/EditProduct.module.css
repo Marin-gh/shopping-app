@@ -47,12 +47,12 @@
 
 .editProdForm input:focus{
     border: 2px solid rgb(197, 197, 197);
-    background-color: rgb(253, 224, 224);
+    background-color: rgb(244 247 255);
 }
 
 .editProdForm textarea:focus{
     border: 2px solid rgb(197, 197, 197);
-    background-color: rgb(253, 224, 224);
+    background-color: rgb(244 247 255);
 }
 
 

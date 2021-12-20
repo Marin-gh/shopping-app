@@ -179,8 +179,8 @@
     border-radius: 8px;
     font-size: 0.9rem;
     font-weight: 600;
-    color: black;
-    background-color: rgb(161 167 189);
+    color: #e3e8fa;
+    background-color: rgb(63 73 118);
     transform: translateY(-2px);
 }
 .submitBtn:active .btnFront {

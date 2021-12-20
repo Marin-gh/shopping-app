@@ -137,7 +137,7 @@
     font-weight: 500;
 }
 
-.submitBtn{
+/*.submitBtn{
     background-color: rgb(247, 239, 239);
     border: 2px solid black;
     border-radius: 6px;
@@ -150,7 +150,7 @@
 
 .submitBtn:hover{
     background-color: rgb(219, 208, 208);
-}
+}*/
 
 .textReview{
     padding: 10px;
@@ -162,6 +162,29 @@
     background-color: rgb(247, 239, 239);
     outline: none;
     resize: none;
+}
+
+.submitBtn{
+    background-color: black;
+    border: none;
+    border-radius: 8px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    padding: 0;
+    cursor: pointer;
+}
+.btnFront{
+    display: block;
+    padding: 10px;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: black;
+    background-color: rgb(161 167 189);
+    transform: translateY(-2px);
+}
+.submitBtn:active .btnFront {
+    transform: translateY(0px);
 }
 
 .textReview:hover{
@@ -187,6 +210,10 @@
     .submitBtn{
         max-width: max-content;
         align-self: flex-end;
+    }
+
+    .btnFront{
+        padding: 10px 20px;
     }
 }
 

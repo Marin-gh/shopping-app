@@ -59,8 +59,8 @@ function DeleteModal(props) {
             <div className={styles.modal}>
                 <div className={styles.title}>Are you sure you want to delete?</div>
                 <div className={styles.btnWrapper}>
-                    <button onClick={(e)=>{handleYes(e)}} className={styles.yesBtn}>Yes</button>
-                    <button onClick={(e)=>{handleNo(e)}} className={styles.noBtn}>No</button>
+                    <button onClick={(e)=>{handleYes(e)}} className={styles.yesBtn}><span className={styles.yesBtnFront}>Yes</span></button>
+                    <button onClick={(e)=>{handleNo(e)}} className={styles.noBtn}><span className={styles.noBtnFront}>No</span></button>
                 </div>
                 {isLoading && <span>is loading...</span>}
                 {error.state && <span>{error.msg}</span>}

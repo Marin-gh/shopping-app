@@ -15,3 +15,12 @@
     font-weight: 700;
     color:rgb(192, 23, 4);
 }
+
+@media(min-width:600px){
+    
+    .notFoundText{
+        padding-top: 30px;
+        padding-bottom: 30px;
+        font-size: 1.3rem;
+    }
+}

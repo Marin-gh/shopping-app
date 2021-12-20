@@ -95,7 +95,7 @@ function EditProduct(props) {
                     <label htmlFor="prodImg">New Image(s):</label>
                     <input type="file" id="prodImg" placeholder="image(s)" multiple onChange={(e)=>{setData({...data, images: e.target.files})}}></input>
 
-                    <button type="submit" className={styles.submitBtn}>Save</button>
+                    <button type="submit" className={styles.submitBtn}><span className={styles.btnFront}>Save</span></button>
                 </form>
                 {isLoading && <span className={styles.isLoading}>is loading...</span>}
                 {error.state && <span>{error.msg}</span>}

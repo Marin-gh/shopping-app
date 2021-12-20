@@ -28,7 +28,7 @@
 .title{
     font-size: 1.2rem;
     font-weight: 700;
-    color: #444e70;
+    color: black;
 }
 
 .location{
@@ -84,28 +84,6 @@
     max-height: max-content;
     padding-bottom: 7px;
 }
-
-.editBtn{
-    background-color: wheat;
-    border: 2px solid rgb(184, 103, 27);
-    border-radius: 4px;
-    font-weight: 600;
-    margin-left: 5px;
-    margin-top: 5px;
-    margin-bottom: 5px;
-    padding: 5px;
-    cursor: pointer;
-  }
-  
-.deleteBtn{
-    background-color:rgb(235, 88, 88);
-    border: 1px solid rgb(184, 103, 27);
-    border-radius: 4px;
-    font-weight: 600;
-    margin: 5px;
-    padding: 5px;
-    cursor: pointer;
-  }
   
 .btnWrapper{
     display: flex;
@@ -118,15 +96,81 @@
 }
 
 .addToCartBtn{
-    background-color: rgb(221, 229, 255);
-    border: 2px solid rgb(68, 78, 112);
-    border-radius: 4px;
-    font-weight: 600;
+    background-color: rgb(89 99 132);
+    border: none;
+    border-radius: 8px;
     margin-top: 5px;
     margin-bottom: 5px;
-    padding: 5px;
+    padding: 0;
     grid-column: 1/2;
     cursor: pointer;
+}
+.btnFront{
+    display: block;
+    padding: 7px;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: black;
+    background-color: rgb(227, 232, 250);
+    transform: translateY(-2px);
+}
+.addToCartBtn:active .btnFront {
+    transform: translateY(0px);
+}
+
+.addToCartText{
+    margin-right: 10px;
+}
+
+.editBtn{
+    background-color: #a68343;
+    border: none;
+    border-radius: 6px;
+    padding: 0;
+    cursor: pointer;
+    margin: 5px 0;
+}
+.editBtnFront{
+    display: block;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    padding: 8px;
+    color: black;
+    background-color: wheat;
+    transform: translateY(-2px);
+}
+.editBtn:active .editBtnFront {
+    transform: translateY(0px);
+}
+
+.deleteBtn{
+    background-color: rgb(145 16 16);
+    border: none;
+    border-radius: 6px;
+    padding: 0;
+    cursor: pointer;
+    margin-left: 5px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+.deleteBtnFront{
+    display: block;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    padding: 8px;
+    color: black;
+    background-color: rgb(235, 88, 88);
+    transform: translateY(-2px);
+}
+.deleteBtn:active .deleteBtnFront {
+    transform: translateY(0px);
+}
+
+.carouselComponent{
+    z-index: 0;
 }
 
 .isLoading{
@@ -139,6 +183,16 @@
     animation-iteration-count: infinite;
 }
 
+.modalOverlay{
+    display: flex;
+    justify-content: center;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(0, 0, 0, .5);
+}
 .modalWrapper{
     position: fixed;
     margin: 0 auto;
@@ -160,8 +214,9 @@
         align-self: center;
     }
 
-    .addToCartBtn{
+    .btnFront{
         font-size: 1rem;
+        padding: 10px;
     }
 }
 
@@ -222,16 +277,12 @@
         grid-column: 1/3;
     }
 
-    .addToCartBtn{
-        height: 40px;
-    }
 }
 
 @media(min-width:1200px){
 
-    .addToCartBtn{
-        height: 45px;
-        font-size: 1rem;
+    .btnFront{
+        font-size: 1.1rem;
     }
 
     .content{

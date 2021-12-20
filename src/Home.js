@@ -1,13 +1,18 @@
 import React from 'react';
 import styles from './Home.module.css';
+//import background from './assets/images/background.jpg';
+import { useHistory } from 'react-router-dom';
 
 function Home() {
+
+    const history = useHistory();
+
     return (
         <div className={styles.home}>
-            <img className={styles.img} src="https://m.media-amazon.com/images/M/MV5BNzFiNWE2ZTktYzBhZS00ZmMwLTg5NDYtYTkwM2I0NjZhMTExXkEyXkFqcGdeQXVyNzU1NzE3NTg@._V1_QL75_UX500_CR0,47,500,281_.jpg" alt="HomeCar"/>
-            <div className={styles.welcome}>
-                Welcome to the Shopping App!
-            </div>
+            {/*<img className={styles.img} src={background} alt="HomeCar"/>*/}
+            <button type="button" className={styles.btnShop} onClick={()=>{history.push('/products');}}>
+                <span className={styles.btnFront}>View products</span>
+            </button>
         </div>
     );
 }

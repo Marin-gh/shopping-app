@@ -6,6 +6,11 @@
     padding-bottom: 50px;
 }
 
+article{
+    height: 100%;
+    width: 100%;
+}
+
 .footer{
     position: absolute;
     bottom: 10px;

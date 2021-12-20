@@ -141,7 +141,7 @@ function Reviews(props) {
                             <label htmlFor="addRating"className={styles.labelRating}>Choose a rating:</label>
                             <Rating onClick={(rate)=>{setNewReview({...newReview, rating: rate})}} ratingValue={newReview.rating} className={styles.rating} transition={true}/>
                         </div>
-                        <button type="submit" className={styles.submitBtn}>Add a review</button>
+                        <button type="submit" className={styles.submitBtn}><span className={styles.btnFront}>Add a review</span></button>
                         {isLoading2 && <span className={styles.isLoading}>is loading (saving a new review)...</span>}
                         {error2.state && <span>{error2.msg}</span>}
                     </form>

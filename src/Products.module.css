@@ -55,7 +55,7 @@
 .title{
     font-size: 1.1rem;
     font-weight: 700;
-    color: #444e70;
+    color: black;
     white-space: nowrap;
     overflow: hidden;
     width: 100%;
@@ -113,39 +113,74 @@
     padding-bottom: 7px;
 }
 
-.editBtn{
-    background-color: wheat;
-    border: 2px solid rgb(184, 103, 27);
-    border-radius: 4px;
-    font-weight: 600;
-    margin-left: 5px;
-    margin-top: 5px;
-    margin-bottom: 5px;
-    padding: 5px;
-    cursor: pointer;
-  }
-  
-.deleteBtn{
-    background-color:rgb(235, 88, 88);
-    border: 1px solid rgb(184, 103, 27);
-    border-radius: 4px;
-    font-weight: 600;
-    margin: 5px;
-    padding: 5px;
-    cursor: pointer;
-  }
-  
-.btnWrapper{
+.modalOverlay{
     display: flex;
-    justify-content: flex-end;
+    justify-content: center;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(0, 0, 0, .5);
 }
-
 .modalWrapper{
     position: fixed;
     margin: 0 auto;
     top: 30vh;
     width: 250px;
     height: auto;
+}
+
+.btnWrapper{
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 5px;
+}
+
+.editBtn{
+    background-color: #a68343;
+    border: none;
+    border-radius: 6px;
+    padding: 0;
+    cursor: pointer;
+    margin: 5px 0;
+}
+.editBtnFront{
+    display: block;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    padding: 6px;
+    color: black;
+    background-color: wheat;
+    transform: translateY(-2px);
+}
+.editBtn:active .editBtnFront {
+    transform: translateY(0px);
+}
+
+.deleteBtn{
+    background-color: rgb(145 16 16);
+    border: none;
+    border-radius: 6px;
+    padding: 0;
+    cursor: pointer;
+    margin-left: 5px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+.deleteBtnFront{
+    display: block;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    padding: 6px;
+    color: black;
+    background-color: rgb(235, 88, 88);
+    transform: translateY(-2px);
+}
+.deleteBtn:active .deleteBtnFront {
+    transform: translateY(0px);
 }
 
 /*media queries*/
@@ -165,6 +200,7 @@
     .title{
         font-size: 1rem;
     }
+
 }
 
 @media(min-width:800px){

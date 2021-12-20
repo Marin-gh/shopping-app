@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import './Navbar.css';
 import ShoppingCartModal from './ShoppingCartModal';
 import { ShoppingCartContext } from './App' ;
@@ -76,22 +76,23 @@ function Navbar(props) {
             <>
               <ul className={isModalOpen ? 'navUl open' : 'navUl' }>
                 <li>
-                  <Link to='/' onClick={()=>{setIsModalOpen(false)}}>Home</Link>
+                  <NavLink exact to="/" onClick={()=>{setIsModalOpen(false)}} activeClassName="navSelected" /*className={isActive => (isActive ? "navSelected" : "")}*/>Home</NavLink>
+                  {/*<Link to='/' onClick={()=>{setIsModalOpen(false)}}>Home</Link>*/}
                 </li>
                 <li>
-                  <Link to='/products' onClick={()=>{setIsModalOpen(false)}}>Products</Link>
+                  <NavLink exact to="/products" onClick={()=>{setIsModalOpen(false)}} activeClassName="navSelected" /*className={(isActive) => (isActive ? "navSelected" : "")}*/>Products</NavLink>
                 </li>
                 {!(user.isLoggedIn) ? 
                   <li>
-                      <Link to='/login' onClick={()=>{setIsModalOpen(false)}}>Login</Link> / <Link to='/register' onClick={()=>{setIsModalOpen(false)}}>Register</Link>
+                      <NavLink exact to='/login' onClick={()=>{setIsModalOpen(false)}} activeClassName="navSelected" /*className={(isActive) => (isActive ? "navSelected" : "")}*/>Login</NavLink> / <NavLink exact to='/register' onClick={()=>{setIsModalOpen(false)}} activeClassName="navSelected" /*className={(isActive) => (isActive ? "navSelected" : "")}*/>Register</NavLink>
                   </li> :
                   <>
                     <li>
-                        <Link to='/newProduct' onClick={()=>{setIsModalOpen(false)}}>New Product</Link>
+                        <NavLink exact to='/newProduct' onClick={()=>{setIsModalOpen(false)}} activeClassName="navSelected" /*className={(isActive) => (isActive ? "navSelected" : "")}*/>New Product</NavLink>
                     </li>
                     <li>
                         {(!isLoading && !error.state) ? 
-                            <div className="logout" onClick={(e)=>{setIsModalOpen(false); handleLogout(e)}}>Logout</div> :
+                            <span className="logout" onClick={(e)=>{setIsModalOpen(false); handleLogout(e)}}>Logout</span> :
                             <>
                                 {isLoading && <span>Is loading....</span>}
                                 {error.state && <span>{error.msg}</span>}

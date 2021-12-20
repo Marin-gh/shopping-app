@@ -54,7 +54,7 @@ function Register(props) {
                 <label htmlFor="email">Email:</label>
                 <input type="email" id="email" placeholder="email" required onChange={(e)=>{setData({...data, email:e.target.value})}}></input>
 
-                <button type="submit" className={styles.submitBtn}>Register</button>
+                <button type="submit" className={styles.submitBtn}><span className={styles.btnFront}>Register</span></button>
             </form>
             {isLoading && <span>Is loading....</span>}
             {error.state && <span>{error.msg}</span>}

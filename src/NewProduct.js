@@ -42,7 +42,7 @@ function NewProduct(props) {
 
     return (
         <>
-            <div className={styles.newProdWrapper}><div className={styles.title}>Add a new product:</div>
+            <div className={styles.newProdWrapper}>{/*<div className={styles.title}>Add a new product:</div>*/}
                 <form action="" className={styles.newProdForm} onSubmit={(e)=>{handleSubmit(e)}}>
                     <label htmlFor="prodTitle">Title:</label>
                     <input type="text" id="prodTitle" placeholder="title" required onChange={(e)=>{setData({...data, title: e.target.value})}}></input>
@@ -59,7 +59,7 @@ function NewProduct(props) {
                     <label htmlFor="prodImg">Image(s):</label>
                     <input type="file" id="prodImg" placeholder="image(s)" required multiple onChange={(e)=>{setData({...data, images: [...data.images, ...e.target.files]})}}></input>
 
-                    <button type="submit" className={styles.submitBtn}>Add a product</button>
+                    <button type="submit" className={styles.submitBtn}><span className={styles.btnFront}>Add a product</span></button>
                 </form>
             </div>
             {isLoading && <span className={styles.isLoading}>is loading...</span>}

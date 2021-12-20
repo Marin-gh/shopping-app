@@ -31,24 +31,26 @@
   
   .navUl li a{
     text-decoration: none;
-    color:rgb(68, 78, 112);
+    color:black;
     font-size: 1.2rem;
-    font-weight: 700;
+    font-weight: 600;
+    font-family: "Times New Roman", Times, serif;
   }
   
   .navUl li a:hover{
-    color:rgb(163, 125, 90);
+    color: rgb(68, 78, 112);
   }
 
   .logout{
-    color:rgb(68, 78, 112);
+    color:black;
     font-size: 1.2rem;
-    font-weight: 700;
+    font-weight: 600;
     cursor: pointer;
+    font-family: "Times New Roman", Times, serif;
   }
 
   .logout:hover{
-    color:rgb(163, 125, 90);
+    color:rgb(68, 78, 112);
   }
   
   .navIcons{
@@ -97,7 +99,7 @@
       flex-direction: row;
       justify-content: space-around;
       position: static;
-      border-bottom: 1px solid rgb(184, 103, 27);
+      border-bottom: 1px solid rgb(89 99 132);
       background-color: transparent;
       padding: 0;
       padding-bottom: 10px;
@@ -112,7 +114,16 @@
       border-bottom: 3px solid rgb(68 80 115);
     }
 
-    .navUl div{
+    .navUl li .navSelected{
+      color: rgb(68, 78, 112);
+      border-bottom: 3px solid rgb(68 80 115);
+    }
+
+    .logout:hover{
+      border-bottom: 3px solid rgb(68 80 115);
+    }
+
+    .navUl span{
       margin: 0;
       padding: 0;
     }

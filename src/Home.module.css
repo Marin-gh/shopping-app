@@ -2,32 +2,49 @@
     display: grid;
     grid-template-columns: repeat(1, 1fr);
     justify-items: center;
+    align-items: center;
+    width: 100%;
+    height: 80vh;
+    background: no-repeat center url("./assets/images/background.jpg");
+    background-size: cover;
 }
 
-.img{
+/*.img{
     grid-column: 1;
     border: 1px solid #ddd;
     border-radius: 4px;
     padding: 5px;
     max-width: 100%;
     height: auto;
+}*/
+
+.btnShop{
+    background-color: black;
+    border: none;
+    border-radius: 8px;
+    margin-top: -300px;
+    padding: 0;
+    cursor: pointer;
 }
 
-.img:hover {
-    box-shadow: 0 0 2px 1px rgb(184, 103, 27);
+.btnFront{
+    display: block;
+    padding: 12px 35px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: black;
+    background-color: white;
+    transform: translateY(-2px);
 }
 
-.welcome{
-    font-size: 1.2rem;
-    font-weight: 700;
-    color:rgb(184, 103, 27);
-    margin-top: 5px;
-    text-align: center;
+.btnShop:active .btnFront {
+    transform: translateY(0px);
 }
 
-@media(min-width:600px){
-    .welcome{
-        font-size: 1.5rem;
-        margin-top: 10px;
+@media(min-width:800px){
+    
+    .btnFront{
+        font-size: 1.1rem;
     }
 }

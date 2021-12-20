@@ -54,7 +54,7 @@ function Login(props) {
                 <label htmlFor="password">Password:</label>
                 <input type="password" id="password" placeholder="password" required onChange={(e)=>{setData({...data, password:e.target.value})}}></input>
 
-                <button type="submit" className={styles.submitBtn}>Login</button>
+                <button type="submit" className={styles.submitBtn}><span className={styles.btnFront}>Login</span></button>
             </form>
             {isLoading && <span>Is loading....</span>}
             {error.state && <span>{error.msg}</span>}

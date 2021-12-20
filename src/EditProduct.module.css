@@ -96,15 +96,26 @@
 }
 
 .submitBtn{
-    background-color: rgb(255, 255, 221);
-    border: 2px solid rgb(214, 214, 214);
-    border-radius: 6px;
-    font-weight: 600;
-    font-size: 0.9rem;
+    background-color: rgb(89 99 132);
+    border: none;
+    border-radius: 8px;
     margin-top: 5px;
     margin-bottom: 5px;
-    padding: 10px;
+    padding: 0;
     cursor: pointer;
+}
+.btnFront{
+    display: block;
+    padding: 10px;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: black;
+    background-color: rgb(227, 232, 250);
+    transform: translateY(-2px);
+}
+.submitBtn:active .btnFront {
+    transform: translateY(0px);
 }
 
 .isLoading{
@@ -136,6 +147,9 @@
         max-width: max-content;
         grid-column: 2/3;
         justify-self: flex-end;
+    }
+
+    .btnFront{
         font-size: 1.05rem;
     }
 

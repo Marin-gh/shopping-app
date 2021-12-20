@@ -57,19 +57,19 @@ function Product(props) {
 
     function handleEdit(e, item){
         e.stopPropagation();
-        console.log(`You clicked edit button: ${e.target}, ${item._id}`);
+        //console.log(`You clicked edit button: ${e.target}, ${item._id}`);
         history.push(`/editProduct/${item._id}`);
     }
 
     function handleDelete(e, item){
         e.stopPropagation();
-        console.log(`You clicked delete button: ${e.target}, ${item._id}`);
+        //console.log(`You clicked delete button: ${e.target}, ${item._id}`);
         setDeleteModalOpen({state: true, url: `http://localhost:8080/products/${item._id}`, redirect: '/products'});
     }
 
     function handleAddToCart(e, item){
         e.stopPropagation();
-        console.log("You clicked add to cart button!");
+        //console.log("You clicked add to cart button!");
         dispatchShoppingCart({type: 'add/increment', data: item});
     }
 
@@ -97,16 +97,24 @@ function Product(props) {
                             <RatingView ratingValue={Math.round(data.avgRating)} size={20} className={styles.ratingView}/>
                             <span className={styles.avgRatingText}>({data.avgRating.toFixed(1)})</span>
                         </div>
-                        <p className={styles.description}>Description: {data.description} </p>
+                        <p className={styles.description}>{data.description} </p>
                         <p className={styles.seller}>Seller: {data.author.username}</p>
                         <p className={styles.price}>{data.price} €</p>
                         <div className={styles.btnWrapper2}>
-                            <button className={styles.addToCartBtn} onClick={(e)=>{handleAddToCart(e, data)}}>Add to cart</button>
+                            <button className={styles.addToCartBtn} onClick={(e)=>{handleAddToCart(e, data)}}>
+                                <span className={styles.btnFront}>
+                                    <span className={styles.addToCartText}>Add to cart</span><i className="fas fa-shopping-cart fa-m"></i>
+                                </span>
+                            </button>
                         </div>
                         {data.author._id === user.id && 
                             <div className={styles.btnWrapper}>
-                                <button className={styles.editBtn} onClick={(e)=>{handleEdit(e, data)}}>Edit</button>
-                                <button className={styles.deleteBtn} onClick={(e)=>{handleDelete(e, data)}}>Delete</button>
+                                <button className={styles.editBtn} onClick={(e)=>{handleEdit(e, data)}}>
+                                    <span className={styles.editBtnFront}>Edit</span>
+                                </button>
+                                <button className={styles.deleteBtn} onClick={(e)=>{handleDelete(e, data)}}>
+                                    <span className={styles.deleteBtnFront}>Delete</span>
+                                </button>
                             </div>
                         }
                     </div>
@@ -114,7 +122,13 @@ function Product(props) {
                     {/*Reviews component kojoj cu proslijediti id producta da dohvatim sve review-ove povezane s ovim product-om*/}
                     <Reviews id = {id}/>
                 </div>}
-            {deleteModalOpen.state && <div className={styles.modalWrapper}><DeleteModal closeModal={[deleteModalOpen, setDeleteModalOpen]} /></div>}
+            {deleteModalOpen.state && 
+                <div className={styles.modalOverlay}>
+                    <div className={styles.modalWrapper}>
+                        <DeleteModal closeModal={[deleteModalOpen, setDeleteModalOpen]} />
+                    </div>
+                </div>
+            }
             {error.state && <span>{error.msg}</span>}
         </div>
     )

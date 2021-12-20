@@ -35,12 +35,12 @@
 
 .loginForm input:focus{
     border: 2px solid rgb(197, 197, 197);
-    background-color: rgb(253, 224, 224);
+    background-color: rgb(244 247 255);
 }
 
-.submitBtn{
-    background-color: rgb(255, 255, 221);
-    border: 2px solid rgb(214, 214, 214);
+/*.submitBtn{
+    background-color: rgb(227, 232, 250);
+    border: 2px solid rgb(89 99 132);
     border-radius: 6px;
     font-weight: 600;
     font-size: 0.9rem;
@@ -48,6 +48,29 @@
     margin-bottom: 5px;
     padding: 5px;
     cursor: pointer;
+}*/
+
+.submitBtn{
+    background-color: rgb(89 99 132);
+    border: none;
+    border-radius: 8px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    padding: 0;
+    cursor: pointer;
+}
+.btnFront{
+    display: block;
+    padding: 5px;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: black;
+    background-color: rgb(227, 232, 250);
+    transform: translateY(-2px);
+}
+.submitBtn:active .btnFront {
+    transform: translateY(0px);
 }
 
 /*media queries*/
@@ -67,7 +90,11 @@
         max-width: max-content;
         grid-column: 2/3;
         justify-self: flex-end;
-        font-size: 1.05rem;
+    }
+
+    .btnFront{
+        font-size: 1rem;
+        padding: 7px 14px;
     }
     
 }

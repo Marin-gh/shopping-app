@@ -75,14 +75,24 @@ function Products(props) {
                     </Link>
                     {item.author._id === user.id && 
                         <div className={styles.btnWrapper}>
-                            <button className={styles.editBtn} onClick={(e)=>{handleEdit(e, item)}}>Edit</button>
-                            <button className={styles.deleteBtn} onClick={(e)=>{handleDelete(e, item)}}>Delete</button>
+                            <button className={styles.editBtn} onClick={(e)=>{handleEdit(e, item)}}>
+                                <span className={styles.editBtnFront}>Edit</span>
+                            </button>
+                            <button className={styles.deleteBtn} onClick={(e)=>{handleDelete(e, item)}}>
+                                <span className={styles.deleteBtnFront}>Delete</span>
+                            </button>
                         </div>
                     }
                 </div>
                 )})}
             </div>}
-            {deleteModalOpen.state && <div className={styles.modalWrapper}><DeleteModal closeModal={[deleteModalOpen, setDeleteModalOpen]} /></div>}
+            {deleteModalOpen.state && 
+                <div className={styles.modalOverlay}>
+                    <div className={styles.modalWrapper}>
+                        <DeleteModal closeModal={[deleteModalOpen, setDeleteModalOpen]} />
+                    </div>
+                </div>
+            }
             {error.state && <span>{error.msg}</span>}
         </div>
     )

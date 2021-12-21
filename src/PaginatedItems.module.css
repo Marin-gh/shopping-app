@@ -1,0 +1,252 @@
+.cardWrapper{
+    display: grid;
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+    grid-gap: 20px;
+    grid-auto-rows: minmax(200px, auto);
+    cursor: pointer;
+    width: 100%;
+}
+
+.card{
+    width: 100%;
+    height: auto;
+    box-sizing: border-box;
+    border: 2px solid rgb(89 99 132);
+    border-radius: 5px;
+    padding: 10px;
+    box-shadow: 5px 5px 2px 1px rgba(89, 99, 132, 0.3);
+    display: flex;
+    flex-direction: column;
+}
+
+.card:hover{
+    transform: scale(1.03);
+}
+
+.link{
+    text-decoration: none;
+    font-size: 1rem;
+    font-weight: 600;
+    color: rgb(77, 76, 76);
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.title{
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: black;
+    white-space: nowrap;
+    overflow: hidden;
+    width: 100%;
+}
+
+.location{
+    color: #73716fa1;
+    font-size: 0.9rem;
+}
+
+.seller{
+    align-self: flex-end;
+    color: #73716fa1;
+    font-style: italic;
+    font-size: 0.8rem;
+}
+
+.description{
+    font-family: "Times New Roman", Times, serif;
+    padding: 5px 0;
+    font-size: 1rem;
+    white-space: nowrap;
+    overflow: hidden;
+    width: 100%;
+}
+
+.price{
+    color: #444e70;
+    font-size: 1.2rem;
+    font-weight: 800;
+    align-self: flex-end;
+}
+
+.cardImage{
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+    border-bottom: 2px solid rgb(168, 164, 164);
+}
+
+.ratingViewAndSpan{
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
+    align-items: center;
+}
+
+.ratingView{
+    max-height: max-content;
+}
+
+.avgRatingText{
+    padding-left: 5px;
+    max-height: max-content;
+    padding-bottom: 7px;
+}
+
+.modalOverlay{
+    display: flex;
+    justify-content: center;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(0, 0, 0, .5);
+}
+.modalWrapper{
+    position: fixed;
+    margin: 0 auto;
+    top: 30vh;
+    width: 250px;
+    height: auto;
+}
+
+.btnWrapper{
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 5px;
+}
+
+.editBtn{
+    background-color: #a68343;
+    border: none;
+    border-radius: 6px;
+    padding: 0;
+    cursor: pointer;
+    margin: 5px 0;
+}
+.editBtnFront{
+    display: block;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    padding: 6px;
+    color: black;
+    background-color: wheat;
+    transform: translateY(-2px);
+}
+.editBtn:active .editBtnFront {
+    transform: translateY(0px);
+}
+
+.deleteBtn{
+    background-color: rgb(145 16 16);
+    border: none;
+    border-radius: 6px;
+    padding: 0;
+    cursor: pointer;
+    margin-left: 5px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+.deleteBtnFront{
+    display: block;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    padding: 6px;
+    color: black;
+    background-color: rgb(235, 88, 88);
+    transform: translateY(-2px);
+}
+.deleteBtn:active .deleteBtnFront {
+    transform: translateY(0px);
+}
+
+.itemsAndPaginateWrapper{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.containerClassName{
+    list-style-type: none;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin-top: 20px;
+    padding: 10px 20px;
+    background:rgb(238 230 230);
+    font-weight: 700;
+    font-size: 0.9rem;
+    color: rgb(68, 78, 112);
+    box-sizing: border-box;
+}
+.pageClassName{
+    margin: 0 10px;
+    
+}
+.pageLinkClassName{
+    cursor: pointer;
+    padding: 0 50%;
+}
+.activeClassName{
+}
+.activeLinkClassName{
+    border: 2px solid #d9d9d9;
+    color: black;
+    background: whitesmoke;
+}
+.previousClassName{
+    margin-right: 15px;
+}
+.nextClassName{
+    margin-left: 15px;
+}
+.previousLinkClassName{
+    cursor: pointer;
+}
+.nextLinkClassName{
+    cursor: pointer;
+}
+
+/*media queries*/
+
+@media(min-width:600px){
+    
+    .cardWrapper{
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        grid-gap: 20px;
+    }
+
+    .title{
+        font-size: 1rem;
+    }
+
+}
+
+@media(min-width:800px){
+    
+    .cardWrapper{
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        grid-gap: 20px;
+    }
+
+    .modalWrapper{
+        width: 350px;
+    }
+
+}
+
+@media(min-width:1000px){
+    
+    .cardWrapper{
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        grid-column-gap: 20px;
+    }
+
+}

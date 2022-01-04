@@ -78,6 +78,10 @@ function PaginatedItems(props) {
   const items = props.data;
   const itemsPerPage = props.itemsPerPage;
 
+  const [filteredItems, setFilteredItems] = useState(items);
+  const [filter, setFilter] = useState({minPrice: 0, maxPrice: 32000000});
+  const [filterFormOpen, setFilterFormOpen] = useState(false);
+
   // We start with an empty list of items
   const [currentItems, setCurrentItems] = useState([]);
   //pageCount će biti broj stranica koje ćemo odrediti dijeljenjem ukupnog broja itema i broj itema per page (Math.ceil(item.length/itemPerPage))
@@ -91,19 +95,53 @@ function PaginatedItems(props) {
     //endOffset bi trebao biti potencijalno zadnji broj itema kojeg možemo prikazati na toj single page
     const endOffset = itemOffset + itemsPerPage;
     console.log(`Loading items from ${itemOffset} to ${endOffset}`);
-    setCurrentItems(items.slice(itemOffset, endOffset));
-    setPageCount(Math.ceil(items.length / itemsPerPage));
-  }, [itemOffset, itemsPerPage, items]);
+    setCurrentItems(filteredItems.slice(itemOffset, endOffset));
+    setPageCount(Math.ceil(filteredItems.length / itemsPerPage));
+  }, [itemOffset, itemsPerPage, filteredItems]);
 
   // Invoke when user click to request another page.
   const handlePageClick = (event) => {
-    const newOffset = (event.selected * itemsPerPage) % items.length;
+    const newOffset = (event.selected * itemsPerPage) % filteredItems.length;
     console.log(`User requested page number ${event.selected}, which is offset ${newOffset}`);
     setItemOffset(newOffset);
   };
 
+  //filter all items according to filter state variable then update filteredItems state variable
+  const filterItems = (e) => {
+    e.preventDefault();
+    setItemOffset(0);
+    setFilterFormOpen(false);
+    setFilteredItems(items.filter((item)=>{
+      if(item.price >= filter.minPrice && item.price <= filter.maxPrice){
+        return true;
+      }else{
+        return false;
+      }
+    }));
+  }
+
   return (
     <div className={styles.itemsAndPaginateWrapper}>
+      {filterFormOpen ?
+        <form action="" onSubmit={(e)=>{filterItems(e)}} className={styles.filterForm}>
+          <div>
+            <button className={styles.filterCloseBtn} onClick={(e)=>{setFilterFormOpen(false)}}>Close</button>
+          </div>
+          <div className={styles.filterContentWrapper}>
+            <div className={styles.filterLabelAndInput}>
+              <label htmlFor="minPrice" className={styles.filterLabel}>Min price:</label>
+              <input type="number" id="minPrice" className={styles.filterInput} value={filter.minPrice} onChange={(e)=>{setFilter({...filter, minPrice: parseInt(e.target.value)})}}></input>
+            </div>
+            <div className={styles.filterLabelAndInput}>
+              <label htmlFor="maxPrice" className={styles.filterLabel}>Max price:</label>
+              <input type="number" id="maxPrice" className={styles.filterInput} value={filter.maxPrice} onChange={(e)=>{setFilter({...filter, maxPrice: parseInt(e.target.value)})}}></input>
+            </div>
+            <button type="submit" className={styles.filterSubmitBtn}><span className={styles.filterBtnFront}>Show</span></button>
+          </div>
+        </form> :
+        <button className={styles.filterOpenBtn} onClick={(e)=>{setFilterFormOpen(true)}}>Filter</button>
+      }
+      
       <Items currentItems={currentItems} />
       <ReactPaginate
         breakLabel="..."

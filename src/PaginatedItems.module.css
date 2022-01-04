@@ -168,6 +168,81 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    position: relative;
+}
+
+.filterForm{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin-bottom: 15px;
+}
+.filterLabelAndInput{
+    width: 80%;
+}
+.filterInput{
+    width: 100%;
+    box-sizing: border-box;
+    border: 2px solid rgb(214, 214, 214);
+    border-radius: 6px;
+    background-color: rgb(255, 255, 255);
+    outline: none;
+    padding: 6px;
+}
+.filterInput:focus{
+    border: 2px solid rgb(197, 197, 197);
+    background-color: rgb(244 247 255);
+}
+.filterLabel{
+    color: black;
+    font-size: 0.75rem;
+}
+.filterSubmitBtn{
+    width: 80%;
+    background-color: black;
+    border: none;
+    border-radius: 8px;
+    margin-top: 10px;
+    margin-bottom: 5px;
+    padding: 0;
+    cursor: pointer;
+}
+.filterBtnFront{
+    display: block;
+    padding: 8px;
+    border-radius: 8px;
+    font-size: 0.8rem;
+    color: #e3e8fa;
+    background-color: rgb(63 73 118);
+    transform: translateY(-2px);
+}
+.filterSubmitBtn:active .filterBtnFront {
+    transform: translateY(0px);
+}
+.filterOpenBtn{
+    align-self: flex-start;
+    padding: 7px;
+    margin-bottom: 15px;
+    border-radius: 8px;
+    border: none;
+    font-size: 0.8rem;
+    color: #e3e8fa;
+    background-color: rgb(63 73 118);
+    font-family: 'Open Sans', sans-serif;
+    letter-spacing: .1rem;
+    cursor: pointer;
+}
+.filterCloseBtn{
+    align-self: flex-start;
+    padding: 7px;
+    border-radius: 8px;
+    border: none;
+    font-size: 0.8rem;
+    color: #e3e8fa;
+    background-color: rgb(63 73 118);
+    font-family: 'Open Sans', sans-serif;
+    letter-spacing: .1rem;
+    cursor: pointer;
 }
 
 .containerClassName{
@@ -225,6 +300,26 @@
         font-size: 1rem;
     }
 
+    .filterForm{
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        width: 100%;
+    }
+    .filterLabelAndInput{
+        max-width: 30%;
+        margin-right: 20px;
+    }
+    .filterSubmitBtn{
+        max-width: 30%;
+        margin: 0;
+        align-self: flex-end;
+    }
+    .filterContentWrapper{
+        display: flex;
+        flex-direction: row;
+    }
+
 }
 
 @media(min-width:800px){
@@ -239,6 +334,13 @@
         width: 350px;
     }
 
+    .filterLabelAndInput{
+        max-width: 20%;
+    }
+    .filterSubmitBtn{
+        max-width: 20%;
+    }
+
 }
 
 @media(min-width:1000px){
@@ -247,6 +349,13 @@
         display: grid;
         grid-template-columns: repeat(4, minmax(0, 1fr));
         grid-column-gap: 20px;
+    }
+
+    .filterLabelAndInput{
+        max-width: 15%;
+    }
+    .filterSubmitBtn{
+        max-width: 15%;
     }
 
 }

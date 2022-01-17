@@ -38,6 +38,20 @@
     background-color: rgb(244 247 255);
 }
 
+.validationError{
+    color: #e62c2c;
+    position: relative;
+    top: -10px;
+    text-align: left;
+}
+
+.registerForm input.invalid{
+    border: 2px solid #e62c2c;
+}
+.registerForm input.valid{
+    border: 2px solid green;
+}
+
 .submitBtn{
     background-color: rgb(89 99 132);
     border: none;
@@ -72,6 +86,10 @@
 
     .registerForm label{
         display: inline;
+    }
+
+    .validationError{
+        grid-column: 2/3;
     }
 
     .submitBtn{

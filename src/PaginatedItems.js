@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useEffect, useState, useContext, useReducer } from 'react';
 import ReactPaginate from 'react-paginate';
 import { Link } from 'react-router-dom';
 import { UserContext } from './App';
@@ -72,16 +72,129 @@ function Items({ currentItems }) {
   );
 }
 
+/* ****************** */
+  //filter arr by minPrice and maxPrice and return filteredItems
+  function filterItems(arr, minPrice, maxPrice){
+
+    if(minPrice === ''){
+      minPrice = 0;
+    }
+    if(maxPrice === ''){
+      maxPrice = 32000000;
+    }
+    const filteredItems = arr.filter((item)=>{
+      if(item.price >= parseInt(minPrice) && item.price <= parseInt(maxPrice)){
+        return true;
+      }else{
+        return false;
+      }
+    });
+
+    return filteredItems;
+  }
+
+  //sort arr by sortBy and return sortedItems
+  function sortItems(arr, sortBy){
+    
+    const sortedItems = arr;
+    if(sortBy === "price-inc"){
+      for(let i=0; i<arr.length-1; i++){
+        for(let j=0; j<arr.length-i-1; j++){
+          if(arr[j].price > arr[j+1].price){
+            let temp = arr[j];
+            sortedItems[j] = arr[j+1];
+            sortedItems[j+1] = temp;
+          }
+        }
+      }
+    }else if(sortBy === "price-dec"){
+      for(let i=0; i<arr.length-1; i++){
+        for(let j=0; j<arr.length-i-1; j++){
+          if(arr[j].price < arr[j+1].price){
+            let temp = arr[j];
+            sortedItems[j] = arr[j+1];
+            sortedItems[j+1] = temp;
+          }
+        }
+      }
+    }else if(sortBy === "rating"){
+      for(let i=0; i<arr.length-1; i++){
+        for(let j=0; j<arr.length-i-1; j++){
+          if(arr[j].avgRating < arr[j+1].avgRating){
+            let temp = arr[j];
+            sortedItems[j] = arr[j+1];
+            sortedItems[j+1] = temp;
+          }
+        }
+      }
+    }else if(sortBy === "title"){
+      for(let i=0; i<arr.length-1; i++){
+        for(let j=0; j<arr.length-i-1; j++){
+          if(arr[j].title.toLowerCase() > arr[j+1].title.toLowerCase()){
+            let temp = arr[j];
+            sortedItems[j] = arr[j+1];
+            sortedItems[j+1] = temp;
+          }
+        }
+      }
+    }
+    return sortedItems;
+  }
+
+  //filter then sort arr (items) and return filteredAndSorted array
+  function filterAndSortItems(items, minPrice, maxPrice, sortBy){
+    
+    const filteredItems = filterItems(items, minPrice, maxPrice);
+    const sortedItems = sortItems(filteredItems, sortBy);
+
+    return sortedItems;
+  }
+
+  /* ********************** */
+  const initialStateFilter = {minPrice: 0, maxPrice: 32000000, sortBy: ""};
+  const reducerFunctionFilter = (currentState, action) => {
+    switch (action.type) {
+      //update filter state varijable
+      case 'minPrice':
+        return {...currentState, minPrice: action.data};
+      case 'maxPrice':
+        return {...currentState, maxPrice: action.data};
+      case 'sortBy':
+        return {...currentState, sortBy: action.data};
+      default:
+        return currentState;
+    }
+  }
+
 //main component that receives all data (items) and number of items per page (itemsPerPage) as a props
 function PaginatedItems(props) {
 
   const items = props.data;
   const itemsPerPage = props.itemsPerPage;
 
-  const [filteredItems, setFilteredItems] = useState(items);
-  const [filter, setFilter] = useState({minPrice: 0, maxPrice: 32000000});
+  const [filter, dispatchFilter] = useReducer(reducerFunctionFilter, JSON.parse(sessionStorage.getItem('filter')) || initialStateFilter );
+  useEffect(() => {
+    //na svaku promjenu filter state varijable, spremi tu novu vrijednost u sessionStorage pod key "filter"
+    sessionStorage.setItem('filter', JSON.stringify(filter));
+  }, [filter]);
+  const [filteredAndSortedItems, setFilteredAndSortedItems] = useState([]);
+  //useEffect() which will be called only when component mounts (and when changing items variable)
+  //this is important when we want to go back to "products page" to display filteredAndSorted items (no need to manually filter and sort again)
+  useEffect(()=>{
+    //filter (all) items according to filter state variable (and also sort that filtered items) and update filteredAndSortedItems
+    //state variable which causes call of another useEffect() hook that will end up showing filtered and sorted items
+    setFilteredAndSortedItems(filterAndSortItems(items, filter.minPrice, filter.maxPrice, filter.sortBy));
+    console.log("useEffect on mounting!");
+  }, [items]);
+  
+
   const [filterFormOpen, setFilterFormOpen] = useState(false);
 
+  //currPage is state variable that store active (selected) page
+  const [currPage, setCurrPage] = useState(0 || JSON.parse(sessionStorage.getItem('currPage')));
+  useEffect(()=>{
+    sessionStorage.setItem('currPage', JSON.stringify(currPage));
+  },[currPage]);
   // We start with an empty list of items
   const [currentItems, setCurrentItems] = useState([]);
   //pageCount će biti broj stranica koje ćemo odrediti dijeljenjem ukupnog broja itema i broj itema per page (Math.ceil(item.length/itemPerPage))
@@ -89,58 +202,76 @@ function PaginatedItems(props) {
   // Here we use item offsets; we could also use page offsets
   // following the API or data you're working with.
   //itemOffset bi trebao biti broj itema koje preskačemo (nakon kojih prikazujemo)
-  const [itemOffset, setItemOffset] = useState(0);
+  const [itemOffset, setItemOffset] = useState(0 || JSON.parse(sessionStorage.getItem('itemOffset')));
+  useEffect(()=>{
+    sessionStorage.setItem('itemOffset', JSON.stringify(itemOffset));
+  },[itemOffset]);
 
   useEffect(() => {
     //endOffset bi trebao biti potencijalno zadnji broj itema kojeg možemo prikazati na toj single page
     const endOffset = itemOffset + itemsPerPage;
-    console.log(`Loading items from ${itemOffset} to ${endOffset}`);
-    setCurrentItems(filteredItems.slice(itemOffset, endOffset));
-    setPageCount(Math.ceil(filteredItems.length / itemsPerPage));
-  }, [itemOffset, itemsPerPage, filteredItems]);
+    console.log(`Loading items from ${itemOffset+1} to ${endOffset}`);
+    setCurrentItems(filteredAndSortedItems.slice(itemOffset, endOffset));
+    setPageCount(Math.ceil(filteredAndSortedItems.length / itemsPerPage));
+  }, [itemOffset, itemsPerPage, filteredAndSortedItems]);
 
   // Invoke when user click to request another page.
   const handlePageClick = (event) => {
-    const newOffset = (event.selected * itemsPerPage) % filteredItems.length;
-    console.log(`User requested page number ${event.selected}, which is offset ${newOffset}`);
+    const newOffset = (event.selected * itemsPerPage) % filteredAndSortedItems.length;
+    console.log(`User requested page number ${event.selected+1}, which is offset ${newOffset}`);
+    setCurrPage(event.selected);
     setItemOffset(newOffset);
   };
 
-  //filter all items according to filter state variable then update filteredItems state variable
-  const filterItems = (e) => {
+  //filter all items according to filter state variable (and also sort that filtered items) then update filteredAndSortedItems state variable
+  const handleFilterSubmit = (e) => {
     e.preventDefault();
+    e.stopPropagation();
     setItemOffset(0);
+    setCurrPage(0);
     setFilterFormOpen(false);
-    setFilteredItems(items.filter((item)=>{
-      if(item.price >= filter.minPrice && item.price <= filter.maxPrice){
-        return true;
-      }else{
-        return false;
-      }
-    }));
+    setFilteredAndSortedItems(filterAndSortItems(items, filter.minPrice, filter.maxPrice, filter.sortBy));
+  }
+
+  const handleSortChange = (e) => {
+    //console.log("Sorting by: ", e.target.value);
+    //console.log("Filtered items (before sorting): ", filteredAndSortedItems);
+    dispatchFilter({type: "sortBy", data: e.target.value});
+    //IMPORTANT to send array that points on different address (otherwise, sending filteredAndSortedItems as param means that arr param in sortItem() function will point on the same address so we will mutate state variable manually which will cause bugs)
+    //so we will send array [...filteredAndSortedItems] which is array that points on different address but has same values as filteredAndSortedItems array
+    //with this aproach we won't mutate state variable filteredAndSortedItems manually and won't cause any bugs
+    setFilteredAndSortedItems(sortItems([...filteredAndSortedItems], e.target.value));
   }
 
   return (
     <div className={styles.itemsAndPaginateWrapper}>
-      {filterFormOpen ?
-        <form action="" onSubmit={(e)=>{filterItems(e)}} className={styles.filterForm}>
-          <div>
-            <button className={styles.filterCloseBtn} onClick={(e)=>{setFilterFormOpen(false)}}>Close</button>
-          </div>
+      <div className={styles.filterBtnAndSortWrapper}>
+        <button className={styles.filterOpenBtn} onClick={(e)=>{e.stopPropagation(); setFilterFormOpen(prevFilterFormOpen => !prevFilterFormOpen)}}>{!filterFormOpen ? "Filter" : "Close"}</button>
+        <select name="sortBy" id="sortBy" value={filter.sortBy} onChange={(e)=>{handleSortChange(e)}}>
+          <option value="" disabled>Sort by:</option>
+          <option value="price-inc">Price - increment</option>
+          <option value="price-dec">Price - decrement</option>
+          <option value="rating">Rating</option>
+          <option value="title">Title</option>
+        </select>
+      </div>
+      
+      {filterFormOpen &&
+        <form action="" onSubmit={(e)=>{handleFilterSubmit(e)}} className={styles.filterForm}>
           <div className={styles.filterContentWrapper}>
             <div className={styles.filterLabelAndInput}>
               <label htmlFor="minPrice" className={styles.filterLabel}>Min price:</label>
-              <input type="number" id="minPrice" className={styles.filterInput} value={filter.minPrice} onChange={(e)=>{setFilter({...filter, minPrice: parseInt(e.target.value)})}}></input>
+              <input type="number" id="minPrice" className={styles.filterInput} value={filter.minPrice} onChange={(e)=>{dispatchFilter({type: "minPrice", data: e.target.value})}}></input>
             </div>
             <div className={styles.filterLabelAndInput}>
               <label htmlFor="maxPrice" className={styles.filterLabel}>Max price:</label>
-              <input type="number" id="maxPrice" className={styles.filterInput} value={filter.maxPrice} onChange={(e)=>{setFilter({...filter, maxPrice: parseInt(e.target.value)})}}></input>
+              <input type="number" id="maxPrice" className={styles.filterInput} value={filter.maxPrice} onChange={(e)=>{dispatchFilter({type: "maxPrice", data: e.target.value})}}></input>
             </div>
             <button type="submit" className={styles.filterSubmitBtn}><span className={styles.filterBtnFront}>Show</span></button>
           </div>
-        </form> :
-        <button className={styles.filterOpenBtn} onClick={(e)=>{setFilterFormOpen(true)}}>Filter</button>
+        </form>
       }
+      
       
       <Items currentItems={currentItems} />
       <ReactPaginate
@@ -149,6 +280,7 @@ function PaginatedItems(props) {
         onPageChange={handlePageClick}
         pageRangeDisplayed={5}
         pageCount={pageCount}
+        forcePage={currPage}
         previousLabel="<"
         renderOnZeroPageCount={null}
         containerClassName={styles.containerClassName}

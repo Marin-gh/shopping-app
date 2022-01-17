@@ -132,7 +132,7 @@ function App() {
   const [ shoppingCart, dispatchShoppingCart ] = useReducer(reducerFunctionShoppingCart, JSON.parse(localStorage.getItem('shoppingCart')) || initialStateShoppingCart );
 
   //user globalna state varijabla (na svaki refresh, vrijednost globalne state varijable je ono što je spremljeno u localeStorage pod key 'user'
-  //ili ako nije još spremljeno ništa, onda initialStateUser što je prazan objekt, doduše s propertyje .isLoggedIn postavljenim na false)
+  //ili ako nije još spremljeno ništa, onda initialStateUser što je prazan objekt, doduše s propertyjem .isLoggedIn postavljenim na false)
   const [ user, dispatchUser ] = useReducer(reducerFunctionUser, JSON.parse(sessionStorage.getItem('user')) || initialStateUser );
 
   useEffect(() => {
@@ -141,7 +141,7 @@ function App() {
   }, [shoppingCart]);
 
   useEffect(() => {
-    //na svaku promjenu globalne user state varijable, spremi tu novu vrijednost u localeStorage pod key "user"
+    //na svaku promjenu globalne user state varijable, spremi tu novu vrijednost u sessionStorage pod key "user"
     sessionStorage.setItem("user", JSON.stringify(user));
   }, [user]);
 

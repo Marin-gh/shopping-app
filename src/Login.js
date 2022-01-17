@@ -22,24 +22,21 @@ function Login(props) {
         setIsLoading(true);
         //sad šaljemo podatke serveru (post request)
         try{
-            //dobit ćemo podatke od usera i to: username i email o useru ako postoji u bazi, inače ćemo dobiti string error
+            //dobit ćemo podatke od usera i to: username i email o useru ako postoji u bazi, inače ćemo dobiti 401 Unauthorized status (ide se odmah na ovaj catch jer zapravo nismo dobili response)
             const response = await axios.post('http://localhost:8080/login', data, {withCredentials: true});
             //console.log(response.data);
             setIsLoading(false);
-            if(typeof(response.data) === "string" ){
-                setError({state: true, msg: response.data});
-            }else{
-                setError({state: false, msg: ""});
-                const { username, email } = response.data;
-                console.log(`logged user: USERNAME: ${username}, EMAIL: ${email}`);
-                //update-amo globalnu user varijablu ako smo se uspješno logirali
-                dispatchUser({type: 'add/login', data: response.data});
-                //vraćamo se odakle smo došli na login
-                history.go(-1);
-            }
+            setError({state: false, msg: ""});
+            const { username, email } = response.data;
+            console.log(`logged user: USERNAME: ${username}, EMAIL: ${email}`);
+            //update-amo globalnu user varijablu ako smo se uspješno logirali
+            dispatchUser({type: 'add/login', data: response.data});
+            //vraćamo se odakle smo došli na login
+            history.go(-1);
+            
         }catch(err){
-            setError({state: true, msg: err});
             setIsLoading(false);
+            setError({state: true, msg: "Wrong username or password"});
         }
     }
 

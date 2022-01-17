@@ -55,7 +55,12 @@
     background-color: rgb(244 247 255);
 }
 
-
+.validationError{
+    color: #e62c2c;
+    position: relative;
+    top: -10px;
+    text-align: left;
+}
 
 .title{
     font-weight: 700;
@@ -141,6 +146,10 @@
 
     .editProdForm label{
         display: inline;
+    }
+
+    .validationError{
+        grid-column: 2/3;
     }
 
     .submitBtn{

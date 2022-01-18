@@ -17,6 +17,10 @@
     animation-iteration-count: infinite;
 }
 
+.errorMsg{
+    color: red;
+}
+
 
 /*media queries*/
 

@@ -111,7 +111,7 @@ function NewProduct(props) {
                 </form>
             </div>
             {isLoading && <span className={styles.isLoading}>is loading...</span>}
-            {error.state && <span>{error.msg}</span>}
+            {error.state && <span className={styles.errorMsg}>{error.msg}</span>}
         </>
     );
 }

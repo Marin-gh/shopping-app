@@ -95,7 +95,7 @@ function Navbar(props) {
                             <span className="logout" onClick={(e)=>{setIsModalOpen(false); handleLogout(e)}}>Logout</span> :
                             <>
                                 {isLoading && <span>Is loading....</span>}
-                                {error.state && <span>{error.msg}</span>}
+                                {error.state && <span className='errorMsg'>{error.msg}</span>}
                             </>
                         }
                     </li>

@@ -63,7 +63,7 @@ function DeleteModal(props) {
                     <button onClick={(e)=>{handleNo(e)}} className={styles.noBtn}><span className={styles.noBtnFront}>No</span></button>
                 </div>
                 {isLoading && <span>is loading...</span>}
-                {error.state && <span>{error.msg}</span>}
+                {error.state && <span className={styles.errorMsg}>{error.msg}</span>}
             </div>
         </Draggable>
     );

@@ -129,7 +129,7 @@ function Product(props) {
                     </div>
                 </div>
             }
-            {error.state && <span>{error.msg}</span>}
+            {error.state && <span className={styles.errorMsg}>{error.msg}</span>}
         </div>
     )
 }

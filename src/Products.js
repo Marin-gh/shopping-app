@@ -38,7 +38,7 @@ function Products(props) {
 
             {data.length!==0 && <PaginatedItems data={data} itemsPerPage={4}/>}
 
-            {error.state && <span>{error.msg}</span>}
+            {error.state && <span className={styles.errorMsg}>{error.msg}</span>}
         </div>
     )
 }

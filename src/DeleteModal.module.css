@@ -56,6 +56,10 @@
     transform: translateY(0px);
 }
 
+.errorMsg{
+    color: red;
+}
+
 @media(min-width: 800px){
 
     .btnWrapper button{

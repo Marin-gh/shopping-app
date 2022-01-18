@@ -106,7 +106,7 @@ function Register(props) {
                 <button type="submit" className={styles.submitBtn}><span className={styles.btnFront}>Register</span></button>
             </form>
             {isLoading && <span>Is loading....</span>}
-            {error.state && <span>{error.msg}</span>}
+            {error.state && <span className={styles.errorMsg}>{error.msg}</span>}
         </div>
     );
 }

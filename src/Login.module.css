@@ -73,6 +73,10 @@
     transform: translateY(0px);
 }
 
+.errorMsg{
+    color: red;
+}
+
 /*media queries*/
 
 @media(min-width:600px){
@@ -95,6 +99,10 @@
     .btnFront{
         font-size: 1rem;
         padding: 7px 14px;
+    }
+
+    .errorMsg{
+        font-size: 1.1rem;
     }
     
 }

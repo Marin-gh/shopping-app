@@ -199,6 +199,10 @@
     height: auto;
 }
 
+.errorMsg{
+    color: red;
+}
+
 /*media queries*/
 
 @media(min-width:600px){

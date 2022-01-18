@@ -146,7 +146,7 @@ function EditProduct(props) {
                     <button type="submit" className={styles.submitBtn}><span className={styles.btnFront}>Save</span></button>
                 </form>
                 {isLoading && <span className={styles.isLoading}>is loading...</span>}
-                {error.state && <span>{error.msg}</span>}
+                {error.state && <span className={styles.errorMsg}>{error.msg}</span>}
                 {data.oldImages.length!==0 && 
                     <>
                         <span className={styles.askMsg}>Do you want to delete any of uploaded images?</span>

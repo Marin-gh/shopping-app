@@ -147,7 +147,7 @@ function Reviews(props) {
                     </form>
             }
             {deleteModalOpen.state && <div className={styles.modalWrapper}><DeleteModal closeModal={[deleteModalOpen, setDeleteModalOpen]} /></div>}
-            {error.state && <span>{error.msg}</span>}
+            {error.state && <span className={styles.errorMsg}>{error.msg}</span>}
         </div>
     )
 }

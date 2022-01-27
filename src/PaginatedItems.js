@@ -31,12 +31,17 @@ function Items({ currentItems }) {
       setDeleteModalOpen({state: true, url: `http://localhost:8080/products/${item._id}`, redirect: '/products'});
   }
 
+  //save windows scrollPositionY on link click (when user clicks on particular product)
+  function handleClickLink(){
+    sessionStorage.setItem("scrollPositionY", window.scrollY);
+  }
+
   return (
     <>
       {currentItems && <div className={styles.cardWrapper}>{currentItems.map((item)=>{
         return(
           <div className={styles.card} key={item._id}>
-              <Link to={`/products/${item._id}`} className={styles.link} >
+              <Link to={`/products/${item._id}`} className={styles.link} onClick={handleClickLink}>
                   {item.images.length!==0 && <img src={item.images[0].url} className={styles.cardImage} alt="productImage"></img>}
                   <p className={styles.title}>{item.title}</p>
                   <p className={styles.location}>({item.location})</p>
@@ -173,10 +178,12 @@ function PaginatedItems(props) {
   const itemsPerPage = props.itemsPerPage;
 
   const [filter, dispatchFilter] = useReducer(reducerFunctionFilter, JSON.parse(sessionStorage.getItem('filter')) || initialStateFilter );
+  
   useEffect(() => {
     //na svaku promjenu filter state varijable, spremi tu novu vrijednost u sessionStorage pod key "filter"
     sessionStorage.setItem('filter', JSON.stringify(filter));
   }, [filter]);
+  
   const [filteredAndSortedItems, setFilteredAndSortedItems] = useState([]);
   //useEffect() which will be called only when component mounts (and when changing items variable)
   //this is important when we want to go back to "products page" to display filteredAndSorted items (no need to manually filter and sort again)
@@ -215,6 +222,13 @@ function PaginatedItems(props) {
     setPageCount(Math.ceil(filteredAndSortedItems.length / itemsPerPage));
   }, [itemOffset, itemsPerPage, filteredAndSortedItems]);
 
+  function handleOnLoad(){
+    if(JSON.parse(sessionStorage.getItem('scrollPositionY'))){
+      window.scrollTo(0, sessionStorage.getItem('scrollPositionY'));
+      sessionStorage.removeItem('scrollPositionY');
+    }
+  }
+
   // Invoke when user click to request another page.
   const handlePageClick = (event) => {
     const newOffset = (event.selected * itemsPerPage) % filteredAndSortedItems.length;
@@ -234,8 +248,6 @@ function PaginatedItems(props) {
   }
 
   const handleSortChange = (e) => {
-    //console.log("Sorting by: ", e.target.value);
-    //console.log("Filtered items (before sorting): ", filteredAndSortedItems);
     dispatchFilter({type: "sortBy", data: e.target.value});
     //IMPORTANT to send array that points on different address (otherwise, sending filteredAndSortedItems as param means that arr param in sortItem() function will point on the same address so we will mutate state variable manually which will cause bugs)
     //so we will send array [...filteredAndSortedItems] which is array that points on different address but has same values as filteredAndSortedItems array
@@ -244,7 +256,7 @@ function PaginatedItems(props) {
   }
 
   return (
-    <div className={styles.itemsAndPaginateWrapper}>
+    <div onLoad={handleOnLoad} className={styles.itemsAndPaginateWrapper}>
       <div className={styles.filterBtnAndSortWrapper}>
         <button className={styles.filterOpenBtn} onClick={(e)=>{e.stopPropagation(); setFilterFormOpen(prevFilterFormOpen => !prevFilterFormOpen)}}>{!filterFormOpen ? "Filter" : "Close"}</button>
         <select name="sortBy" id="sortBy" value={filter.sortBy} onChange={(e)=>{handleSortChange(e)}}>

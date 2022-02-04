@@ -158,8 +158,8 @@
     height: auto;
     box-sizing: border-box;
     border: 2px solid #00000078;
+    background-color: rgb(235 237 240);
     border-radius: 10px;
-    background-color: rgb(247, 239, 239);
     outline: none;
     resize: none;
 }
@@ -188,7 +188,7 @@
 }
 
 .textReview:hover{
-    background-color: rgb(219, 208, 208);
+    background-color: rgb(244 247 255);
 }
 
 .modalWrapper{

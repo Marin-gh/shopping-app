@@ -51,7 +51,7 @@
 }*/
 
 .submitBtn{
-    background-color: rgb(89 99 132);
+    background-color: black;
     border: none;
     border-radius: 8px;
     margin-top: 5px;
@@ -65,8 +65,8 @@
     border-radius: 8px;
     font-size: 0.9rem;
     font-weight: 600;
-    color: black;
-    background-color: rgb(227, 232, 250);
+    color: #e3e8fa;
+    background-color: rgb(63 73 118);
     transform: translateY(-2px);
 }
 .submitBtn:active .btnFront {

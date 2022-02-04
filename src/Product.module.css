@@ -96,7 +96,7 @@
 }
 
 .addToCartBtn{
-    background-color: rgb(89 99 132);
+    background-color: rgb(77 124 94);
     border: none;
     border-radius: 8px;
     margin-top: 5px;
@@ -112,7 +112,7 @@
     font-size: 0.9rem;
     font-weight: 600;
     color: black;
-    background-color: rgb(227, 232, 250);
+    background-color: rgb(79 216 128);
     transform: translateY(-2px);
 }
 .addToCartBtn:active .btnFront {

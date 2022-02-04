@@ -9,49 +9,57 @@
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-    align-items: flex-start;
+    align-items: center;
     list-style-type: none;
     position: absolute;
-    left: -100%;
-    width: 50%;
-    min-height: 300px;
-    background-color: rgb(227, 232, 250);
-    transition: left 0.5s;
-    padding-top: 20px;
+    width: 100%;
+    height: 0px;
+    max-height: 0px;
+    padding-top: 0px;
+    visibility: hidden;
+    background-color: rgb(63 73 118);
+    transition: max-height 1.2s;
   }
   
   .navUl.open{
+    height: auto;
+    max-height: 1000px;
     left: 0px;
+    padding-top: 20px;
+    margin-top: 10px;
+    visibility: visible;
     z-index: 100;
   }
 
   .navUl li{
-    margin-left: 20px;
     margin-bottom: 20px;
+    width: 80%;
+    border-bottom: 2px solid black;
+    padding-bottom: 4px;
   }
   
   .navUl li a{
     text-decoration: none;
-    color:black;
-    font-size: 1.2rem;
+    color:#e3e8f3;
+    font-size: 1.1rem;
     font-weight: 600;
     font-family: "Times New Roman", Times, serif;
   }
   
   .navUl li a:hover{
-    color: rgb(68, 78, 112);
+    font-size: 1.2rem;
   }
 
   .logout{
-    color:black;
-    font-size: 1.2rem;
+    color:#e3e8f3;
+    font-size: 1.1rem;
     font-weight: 600;
     cursor: pointer;
     font-family: "Times New Roman", Times, serif;
   }
 
   .logout:hover{
-    color:rgb(68, 78, 112);
+    font-size: 1.2rem;
   }
   
   .navIcons{
@@ -100,7 +108,8 @@
     
     .navUl{
       width: 100%;
-      min-height: auto;
+      height: min-content;
+      max-height: 1000px;
       display: flex;
       flex-direction: row;
       justify-content: space-around;
@@ -109,15 +118,30 @@
       background-color: transparent;
       padding: 0;
       padding-bottom: 10px;
+      visibility: visible;
+      align-items: flex-start;
     }
     
     .navUl li{
       margin: 0;
       padding: 0;
+      width: auto;
+      border: none;
+      padding-bottom: 0;
+    }
+
+    .navUl li a{
+      color: black;
+    }
+
+    .logout{
+      color: black;
     }
 
     .navUl li a:hover{
       border-bottom: 3px solid rgb(68 80 115);
+      color: rgb(68, 78, 112);
+      font-size: none;
     }
 
     .navUl li .navSelected{
@@ -127,6 +151,8 @@
 
     .logout:hover{
       border-bottom: 3px solid rgb(68 80 115);
+      color: rgb(68, 78, 112);
+      font-size: none;
     }
 
     .navUl span{

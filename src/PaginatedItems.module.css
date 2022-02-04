@@ -169,7 +169,6 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    position: relative;
     width: 100%;
 }
 
@@ -179,6 +178,10 @@
     width: 70%;
     align-self: flex-start;
     margin-bottom: 15px;
+    animation-name: animateForm;
+    animation-duration: 0.5s;
+    animation-fill-mode: both;
+    animation-iteration-count: 1;
 }
 .filterLabelAndInput{
     width: 80%;
@@ -246,7 +249,7 @@
     justify-content: center;
     margin-top: 20px;
     padding: 10px 20px;
-    background:rgb(238 230 230);
+    background:#e4e6eb;
     font-weight: 700;
     font-size: 0.9rem;
     color: rgb(68, 78, 112);
@@ -352,4 +355,11 @@
         max-width: 15%;
     }
 
+}
+
+/*keyframes*/
+
+@keyframes animateForm{
+    0%{transform: translateY(-5px)}
+    100%{transform: translateY(0)}
 }
